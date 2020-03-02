@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>NoticiaExpand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NoticiaExpand.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.ActionBar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.w3c.dom.Text</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">NoticiaExpand </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    TextView mTextTitulo</span><span class="s0">;</span><span class="s1"> 
+    TextView mTextDescricao</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_noticia_expand)</span><span class="s0">;</span><span class="s1"> 
+ 
+        Intent intent = getIntent()</span><span class="s0">;</span><span class="s1"> 
+        Bundle bundle = intent.getExtras()</span><span class="s0">;</span><span class="s1"> 
+        String titulo = bundle.getString(</span><span class="s2">&quot;titulo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String descricao = bundle.getString(</span><span class="s2">&quot;descricao&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar = (Toolbar) findViewById(R.id.tb_noticia)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitle(</span><span class="s2">&quot;Notícia&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+ 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+ 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        mTextTitulo = (TextView) findViewById(R.id.tituloNoticiaE)</span><span class="s0">;</span><span class="s1"> 
+        mTextTitulo.setText(titulo)</span><span class="s0">;</span><span class="s1"> 
+        mTextDescricao = (TextView) findViewById(R.id.descricaoNoticiaE)</span><span class="s0">;</span><span class="s1"> 
+        mTextDescricao.setText(descricao)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

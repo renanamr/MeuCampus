@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/md_white_1000"
+    android:layout_margin="0dp"
+
+    tools:context="com.meucampus.arthur.testez.ActivityTurmas">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_turmas1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"/>
+
+<com.miguelcatalan.materialsearchview.MaterialSearchView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/seachView"
+    android:textColor="@color/md_white_1000"
+    android:hint="Pesquisar"
+    android:textColorHint="@color/md_white_1000"
+    app:searchBackground="@color/colorPrimary"
+
+    />
+
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_below="@id/tb_turmas1"
+        android:paddingBottom="0dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/md_white_1000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress"
+            android:layout_gravity="center_horizontal" />
+
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/listTurmas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb_turmas1"
+        android:layout_centerHorizontal="true"
+        android:background="@color/md_white_1000"
+        android:divider="@color/md_white_1000"
+        android:dividerHeight="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:scrollbarThumbVertical="@color/md_white_1000"
+        android:scrollbarSize="0dp" />
+</RelativeLayout>

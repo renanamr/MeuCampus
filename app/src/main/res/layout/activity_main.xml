@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeL"
+    tools:context="com.meucampus.arthur.testez.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_main"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" ></android.support.v7.widget.Toolbar>
+
+<!--    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/tb_main"
+        android:layout_height="match_parent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/colorFeed"
+        android:paddingTop="10dp"> -->
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_below="@id/tb_main"
+        android:paddingBottom="0dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:background="@color/colorFeed"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressMain"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/colorFeed"
+        android:dividerHeight="6dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:scrollbarThumbVertical="@color/md_white_1000"
+            android:scrollbarSize="0dp"
+        android:id="@+id/listViewNoticias"
+        />
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@color/colorFeed"
+            android:dividerHeight="6dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/listViewEventos"
+            android:scrollbarThumbVertical="@color/colorFeed"
+            android:scrollbarSize="0dp"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add"
+            android:tint="@color/colorPrimaryDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_input_add" />
+    </FrameLayout>
+
+
+
+    <!--</LinearLayout> -->
+    <!--<include
+        android:id="@+id/inc_tb_bottom"
+        layout="@layout/toolbar_bottom"/> -->
+
+
+</RelativeLayout>

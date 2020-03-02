@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Grade.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Grade.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 14/12/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">Grade { 
+    </span><span class="s0">private </span><span class="s1">String horarioManha[][]</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String horarioTarde[][]</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">String[][] getHorarioManha() { 
+        </span><span class="s0">return </span><span class="s1">horarioManha</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setHorarioManha(String[][] horarioManha) { 
+        </span><span class="s0">this</span><span class="s1">.horarioManha = horarioManha</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String[][] getHorarioTarde() { 
+        </span><span class="s0">return </span><span class="s1">horarioTarde</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setHorarioTarde(String[][] horarioTarde) { 
+        </span><span class="s0">this</span><span class="s1">.horarioTarde = horarioTarde</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">private </span><span class="s1">List&lt;Disciplina&gt; disciplinas</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addDisciplina(Disciplina d){ 
+        </span><span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.disciplinas == </span><span class="s0">null</span><span class="s1">) 
+            </span><span class="s0">this</span><span class="s1">.disciplinas = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.disciplinas.add(d)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">List&lt;Disciplina&gt; getDisciplinas() { 
+        </span><span class="s0">return </span><span class="s1">disciplinas</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setDisciplinas(List&lt;Disciplina&gt; disciplinas) { 
+        </span><span class="s0">this</span><span class="s1">.disciplinas = disciplinas</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

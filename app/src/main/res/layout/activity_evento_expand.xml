@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:background="@drawable/list_shadow">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_Evento"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb_Evento"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Título"
+            android:textColor="@color/colorPrimarytext"
+            android:id="@+id/TituloEventoE"
+            android:layout_marginTop="10dp"
+
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/layoutData"
+            android:layout_alignRight="@+id/layoutData"
+            android:layout_alignEnd="@+id/textView5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descrição"
+            android:id="@+id/DescricaoEventoE"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="17dp"/>
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:id="@+id/layoutData">
+           <ImageView
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:id="@+id/imageEvento1"
+               android:background="@drawable/calendar"
+               android:scaleType = "fitXY"
+               android:adjustViewBounds = "true"
+               android:maxHeight = "100dp"
+               android:maxWidth = "100dp"
+               android:minHeight = "100dp"
+               android:minWidth = "100dp"
+               android:layout_below="@+id/txtTituloN"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentStart="true">
+
+           </ImageView>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceLarge"
+               android:text="25"
+               android:textColor="@color/md_black_1000"
+               android:layout_below="@+id/TxtDataImg2"
+               android:layout_centerHorizontal="true"
+               android:paddingTop="6dp"
+               android:id="@+id/TxtDataImg" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceMedium"
+               android:text="MAR"
+               android:textColor="@color/md_black_1000"
+               android:layout_marginTop="10dp"
+               android:layout_centerHorizontal="true"
+               android:id="@+id/TxtDataImg2" />
+
+       </RelativeLayout>
+
+
+
+<!--
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_shadow"
+            android:weightSum="1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/tableRow">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="       Interese:   "
+                android:layout_marginTop="0dp"
+                android:id="@+id/textView4"
+                android:layout_weight="0.33" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:text=""
+                android:id="@+id/btnInteresse1"
+                android:background="@drawable/like"
+                android:layout_weight="0.15" />
+
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/textView7" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:background="@drawable/unlike"
+                android:id="@+id/btnInteresse2"
+
+                android:layout_marginRight="15dp"
+                android:layout_weight="0.15" />
+
+        </TableRow>-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Informações:"
+            android:id="@+id/textView3"
+            android:textSize="19dp"
+            android:textColor="@color/colorPrimarytext"
+            android:layout_below="@+id/textView5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp" />
+<!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="local......................"
+            android:id="@+id/TxtLocal2"
+            android:layout_above="@+id/tableRow"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="41dp" />
+-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="25,dsfsfs,2939"
+            android:id="@+id/TxtData7"
+            android:layout_below="@+id/DescricaoEventoE"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="4dp"
+            android:text="_______________________________________________"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView5"
+            android:layout_below="@+id/layoutData"
+             />
+
+        <TextView
+            android:id="@+id/txtPeriodoE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TituloEventoE"
+            android:layout_toEndOf="@+id/layoutData"
+            android:layout_toRightOf="@+id/layoutData"
+            android:text="Período"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="126dp"
+        android:layout_marginStart="126dp"
+        android:text="" />
+</RelativeLayout>
+</ScrollView>

@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>BD.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+BD.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.ContentValues</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 30/11/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">BD { 
+    </span><span class="s0">private </span><span class="s1">SQLiteDatabase bd</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">BD(Context context){ 
+        BDCore auxbd = </span><span class="s0">new </span><span class="s1">BDCore(context)</span><span class="s0">;</span><span class="s1"> 
+        bd = auxbd.getWritableDatabase()</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">delete(){ 
+        bd.delete(</span><span class="s3">&quot;mensagem&quot;</span><span class="s0">, null, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+    </span><span class="s0">public void </span><span class="s1">inserir (Mensagem mensagem</span><span class="s0">, </span><span class="s1">String tipo</span><span class="s0">, </span><span class="s1">String remetente</span><span class="s0">, </span><span class="s1">String destinatario){ 
+        String tipoBD=</span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(tipo.equals(</span><span class="s3">&quot;COADES/NC&quot;</span><span class="s1">)) 
+            tipoBD=</span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">else</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(tipo.equals(</span><span class="s3">&quot;DG/NC&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                tipoBD=</span><span class="s3">&quot;DG&quot;</span><span class="s0">;</span><span class="s1"> 
+        ContentValues valores = </span><span class="s0">new </span><span class="s1">ContentValues()</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;texto&quot;</span><span class="s0">, </span><span class="s1">mensagem.getTexto())</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;data&quot;</span><span class="s0">, </span><span class="s1">mensagem.getData())</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;hora&quot;</span><span class="s0">, </span><span class="s1">mensagem.getHora())</span><span class="s0">;</span><span class="s1"> 
+ 
+        valores.put(</span><span class="s3">&quot;recebida&quot;</span><span class="s0">, </span><span class="s1">mensagem.isRecebida())</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;matriculaRemetente&quot;</span><span class="s0">, </span><span class="s1">remetente)</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">mensagem.getTipo())</span><span class="s0">;</span><span class="s1"> 
+        valores.put(</span><span class="s3">&quot;matriculaDestinatario&quot;</span><span class="s0">, </span><span class="s1">destinatario)</span><span class="s0">;</span><span class="s1"> 
+        bd.insert(</span><span class="s3">&quot;mensagem&quot;</span><span class="s0">, null, </span><span class="s1">valores)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public </span><span class="s1">List&lt;Mensagem&gt; buscar (String idUsuario</span><span class="s0">, </span><span class="s1">String tipo){ 
+        List&lt;Mensagem&gt; mensagems = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Mensagem&gt;()</span><span class="s0">;</span><span class="s1"> 
+ 
+        String[] colunas = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s3">&quot;texto&quot;</span><span class="s0">, </span><span class="s3">&quot;data&quot;</span><span class="s0">, </span><span class="s3">&quot;hora&quot;</span><span class="s0">, </span><span class="s3">&quot;recebida&quot;</span><span class="s0">, </span><span class="s3">&quot;matriculaRemetente&quot;</span><span class="s0">, </span><span class="s3">&quot;tipo&quot;</span><span class="s0">, </span><span class="s3">&quot;matriculaDestinatario&quot;</span><span class="s1">}</span><span class="s0">;</span><span class="s1"> 
+ 
+        Cursor cursor =bd.query(</span><span class="s3">&quot;mensagem&quot;</span><span class="s0">, </span><span class="s1">colunas</span><span class="s0">, </span><span class="s3">&quot;matriculaDestinatario = &quot; </span><span class="s1">+ idUsuario+ </span><span class="s3">&quot; or matriculaRemetente = &quot; </span><span class="s1">+ idUsuario</span><span class="s0">, null,null, null, </span><span class="s3">&quot;_id ASC&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;TO AQUI NO INSERIR&quot;</span><span class="s0">, </span><span class="s3">&quot;MEU PARCA&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;opa&quot;</span><span class="s0">, </span><span class="s1">cursor.getCount()+</span><span class="s3">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(cursor.getCount()&gt;</span><span class="s4">0</span><span class="s1">){ 
+            cursor.moveToFirst()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">do</span><span class="s1">{ 
+                Log.e(</span><span class="s3">&quot;Tipox&quot;</span><span class="s0">, </span><span class="s3">&quot;Tioo: &quot;</span><span class="s1">+ tipo+</span><span class="s3">&quot;   Tipo bd: &quot;</span><span class="s1">+ cursor.getString(</span><span class="s4">5</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if</span><span class="s1">(!tipo.equals(cursor.getString(</span><span class="s4">5</span><span class="s1">))) 
+                    </span><span class="s0">continue;</span><span class="s1"> 
+ 
+                Mensagem m = </span><span class="s0">new </span><span class="s1">Mensagem()</span><span class="s0">;</span><span class="s1"> 
+                m.setTexto(cursor.getString(</span><span class="s4">0</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setData(cursor.getString(</span><span class="s4">1</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setHora(cursor.getString(</span><span class="s4">2</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">boolean </span><span class="s1">value2 = cursor.getInt(</span><span class="s4">3</span><span class="s1">) &gt; </span><span class="s4">0</span><span class="s0">;</span><span class="s1"> 
+                m.setRecebida(value2)</span><span class="s0">;</span><span class="s1"> 
+                m.setMatricula(cursor.getString(</span><span class="s4">4</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setTipo(cursor.getString(</span><span class="s4">5</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setIdUsuario(cursor.getInt(</span><span class="s4">6</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setMatriculaRemetente(cursor.getString(</span><span class="s4">4</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                m.setMatriculaDestinatario(cursor.getString(</span><span class="s4">5</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+                mensagems.add(m)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">while</span><span class="s1">(cursor.moveToNext())</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">return </span><span class="s1">mensagems</span><span class="s0">;</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>

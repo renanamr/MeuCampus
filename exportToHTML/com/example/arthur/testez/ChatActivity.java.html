@@ -1,0 +1,424 @@
+<html>
+<head>
+<title>ChatActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(104,151,187); }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ChatActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONException</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStreamWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Calendar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">ChatActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">private </span><span class="s1">Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Button btn</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">List&lt;Mensagem&gt; m = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">ListView mList</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Toolbar mToolbarBottom</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">static int </span><span class="s1">jsonLengthU = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+    String url1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">Usuario user</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">boolean </span><span class="s1">coadesRequest</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">String idUsuario</span><span class="s0">;</span><span class="s1"> 
+    String tipo=</span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s4">/*@Override 
+    protected void onRestart() { 
+        request(); 
+        super.onRestart(); 
+    }*/</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">request(){ 
+        </span><span class="s0">if </span><span class="s1">(coadesRequest) { 
+            Log.e(</span><span class="s3">&quot;REQUEST&quot;</span><span class="s0">, </span><span class="s3">&quot;COADES&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s3">&quot;REQUESTCOADES&quot;</span><span class="s0">, </span><span class="s1">idUsuario +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(tipo.equals(</span><span class="s3">&quot;COADES/NC&quot;</span><span class="s1">)) 
+                </span><span class="s0">new </span><span class="s1">GetMensagens().execute(url1+</span><span class="s3">&quot;mensagem/coades/naoLidasIdjson/&quot; </span><span class="s1">+ idUsuario + </span><span class="s3">&quot;&quot;</span><span class="s0">, </span><span class="s1">idUsuario +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">else</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(tipo.equals(</span><span class="s3">&quot;DG/NC&quot;</span><span class="s1">)) 
+                    </span><span class="s0">new </span><span class="s1">GetMensagens().execute(url1+</span><span class="s3">&quot;mensagem/dg/naoLidasIdjson/&quot; </span><span class="s1">+ idUsuario + </span><span class="s3">&quot;&quot;</span><span class="s0">, </span><span class="s1">idUsuario +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        }</span><span class="s0">else </span><span class="s1">{ 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s3">&quot;REQUESTCOADES&quot;</span><span class="s0">, </span><span class="s1">repo.getId() +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//new GetMensagens().execute(url1+&quot;mensagem/naoLidasIdjson/&quot; + repo.getId());</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(tipo.equals(</span><span class="s3">&quot;COADES/NC&quot;</span><span class="s1">)) 
+                </span><span class="s0">new </span><span class="s1">GetMensagens().execute(url1+</span><span class="s3">&quot;mensagem/coades/naoLidasIdjson/&quot; </span><span class="s1">+ repo.getId())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">else</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(tipo.equals(</span><span class="s3">&quot;DG/NC&quot;</span><span class="s1">)) 
+                </span><span class="s0">new </span><span class="s1">GetMensagens().execute(url1+</span><span class="s3">&quot;mensagem/dg/naoLidasIdjson/&quot; </span><span class="s1">+ repo.getId())</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        url1 = getResources().getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_chat)</span><span class="s0">;</span><span class="s1"> 
+        Intent intent = getIntent()</span><span class="s0">;</span><span class="s1"> 
+        Bundle b = intent.getExtras()</span><span class="s0">;</span><span class="s1"> 
+        tipo = b.getString(</span><span class="s3">&quot;tipo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        idUsuario = b.getString(</span><span class="s3">&quot;idusuario&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;Create&quot;</span><span class="s0">, </span><span class="s3">&quot;on&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String matricula = </span><span class="s0">new </span><span class="s1">RepositorioUsuario().getMat()</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;Matriculaaa223232&quot;</span><span class="s0">, </span><span class="s1">matricula+</span><span class="s3">&quot; a&quot; </span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        Log.e(</span><span class="s3">&quot;IDUSU&quot;</span><span class="s0">, </span><span class="s1">idUsuario)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">new </span><span class="s1">GetMensagens().execute(url1+</span><span class="s3">&quot;mensagem/listaNaoLidas/&quot;</span><span class="s1">+tipo+</span><span class="s0">new </span><span class="s1">RepositorioUsuario().getMatricula())</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//new GetMensagens().execute(url1+&quot;mensagem/lista&quot;);</span><span class="s1"> 
+ 
+ 
+        </span><span class="s4">/*m = new ArrayList&lt;&gt;(); 
+ 
+        try { 
+            Intent intent = getIntent(); 
+            Bundle bundle = intent.getExtras(); 
+            int id = bundle.getInt(&quot;idusuario&quot;); 
+            idUsuario = id; 
+            Log.e(&quot;IDUSUARIO&quot;, idUsuario+&quot;&quot;); 
+            coadesRequest = true; 
+        }catch(Exception e){ 
+            coadesRequest = false; 
+        } 
+ 
+ 
+        request(); 
+        */</span><span class="s1"> 
+        mToolbar = (Toolbar) findViewById(R.id.tb_chat)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitle(</span><span class="s3">&quot;Chat&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+        mList = (ListView) findViewById(R.id.listView50)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        mToolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+ 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">//mToolbarBottom = (Toolbar) findViewById(R.id.chat_tb_bottom);</span><span class="s1"> 
+ 
+        btn = (Button) findViewById(R.id.btn_Send)</span><span class="s0">;</span><span class="s1"> 
+ 
+        btn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Calendar c = Calendar.getInstance()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+                TextView txt = (TextView) findViewById(R.id.txt_inputText)</span><span class="s0">;</span><span class="s1"> 
+                String texto = txt.getText() + </span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+                RepositorioUsuario usuario = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(texto.isEmpty()) 
+                    Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s3">&quot;Insira algo na mensagem&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">else</span><span class="s1">{ 
+ 
+                    Mensagem mensagem = (</span><span class="s0">new </span><span class="s1">Mensagem(txt.getText() + </span><span class="s3">&quot;&quot;</span><span class="s0">, </span><span class="s1">c.get(Calendar.HOUR_OF_DAY)+ </span><span class="s3">&quot;:&quot; </span><span class="s1">+ c.get(Calendar.MINUTE)</span><span class="s0">, </span><span class="s1">c.get(Calendar.DAY_OF_MONTH)+</span><span class="s3">&quot;/&quot; </span><span class="s1">+ c.get(Calendar.MONTH) + </span><span class="s3">&quot;/&quot; </span><span class="s1">+ c.get(Calendar.YEAR)))</span><span class="s0">;</span><span class="s1"> 
+                    mensagem.setTipo(tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    mensagem.setMatricula(usuario.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">if</span><span class="s1">(idUsuario.equals(</span><span class="s0">new </span><span class="s1">RepositorioUsuario().getMatricula())) 
+                        mensagem.setMatriculaDestinatario(</span><span class="s3">&quot;0&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    mensagem.setMatriculaRemetente(idUsuario)</span><span class="s0">;</span><span class="s1"> 
+                    txt.setText(</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">try </span><span class="s1">{ 
+                        JSONObject jsonObject = </span><span class="s0">new </span><span class="s1">JSONObject()</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;id&quot;</span><span class="s0">, </span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;texto&quot;</span><span class="s0">, </span><span class="s1">mensagem.getTexto())</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;hora&quot;</span><span class="s0">, </span><span class="s1">c.get(Calendar.HOUR_OF_DAY)+ </span><span class="s3">&quot;:&quot; </span><span class="s1">+ c.get(Calendar.MINUTE))</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;data&quot;</span><span class="s0">, </span><span class="s1">mensagem.getData())</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;recebida&quot;</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;idSetor&quot;</span><span class="s0">, </span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;matriculaRemetente&quot;</span><span class="s0">, </span><span class="s1">mensagem.getMatriculaRemetente())</span><span class="s0">;</span><span class="s1"> 
+                        jsonObject.put(</span><span class="s3">&quot;matriculaDestinatario&quot;</span><span class="s0">, </span><span class="s1">mensagem.getMatriculaDestinatario())</span><span class="s0">;</span><span class="s1"> 
+ 
+                        String json = jsonObject.toString()</span><span class="s0">;</span><span class="s1"> 
+                        Log.e(</span><span class="s3">&quot;JSONST&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+                        BD bd = </span><span class="s0">new </span><span class="s1">BD(getApplicationContext())</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s4">//if (coadesRequest){</span><span class="s1"> 
+ 
+                            bd.inserir(mensagem</span><span class="s0">, </span><span class="s1">tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">mensagem.getMatriculaRemetente()</span><span class="s0">, </span><span class="s1">mensagem.getMatriculaDestinatario() )</span><span class="s0">;</span><span class="s1"> 
+                            </span><span class="s0">new </span><span class="s1">PostMensagem().execute(url1+</span><span class="s3">&quot;mensagem/&quot;</span><span class="s1">+</span><span class="s3">&quot;enviar/&quot;</span><span class="s1">+tipo</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+ 
+                        </span><span class="s4">/*}else{ 
+                            RepositorioUsuario repo = new RepositorioUsuario(); 
+                            mensagem.setIdUsuario(repo.getId()); 
+                            jsonObject = new JSONObject(new Gson().toJson(mensagem)); 
+                            json = jsonObject.toString(); 
+                            Log.e(&quot;JSONALUNO&quot;, json); 
+                            bd.inserir(mensagem, tipo); 
+                            if(tipo.equals(&quot;COADES/NC&quot;)) 
+                                new PostMensagem().execute(url1+&quot;mensagem/criar&quot;, json); 
+                            else 
+                            if (tipo.equals(&quot;DG/NC&quot;)) 
+                                new PostMensagem().execute(url1+&quot;mensagem/dg/criar&quot;, json); 
+ 
+                        }*/</span><span class="s1"> 
+                        </span><span class="s4">//new PostMensagem().execute(&quot;http://192.168.43.127:8080/meucampus/service/mensagem/criar&quot;, json);</span><span class="s1"> 
+                    }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                        Log.e(</span><span class="s3">&quot;GSON&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+                    } 
+ 
+                    mList = (ListView) findViewById(R.id.listView50)</span><span class="s0">;</span><span class="s1"> 
+                    m.add(mensagem)</span><span class="s0">;</span><span class="s1"> 
+                    RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+                    mList.setAdapter(</span><span class="s0">new </span><span class="s1">MensagemAdapter(getApplication()</span><span class="s0">, </span><span class="s1">m</span><span class="s0">, </span><span class="s1">repo.getTipo()))</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//user.setMensagens(m);</span><span class="s1"> 
+                } 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onRestart() { 
+        </span><span class="s0">super</span><span class="s1">.onRestart()</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;Restart&quot;</span><span class="s0">, </span><span class="s3">&quot;On&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mList = (ListView) findViewById(R.id.listView50)</span><span class="s0">;</span><span class="s1"> 
+        mList.setAdapter(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onStop() { 
+        </span><span class="s0">super</span><span class="s1">.onStop()</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;Stop&quot;</span><span class="s0">, </span><span class="s3">&quot;on&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mList = (ListView) findViewById(R.id.listView50)</span><span class="s0">;</span><span class="s1"> 
+        mList.setAdapter(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">GetMensagens </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt; { 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">usuarioId</span><span class="s0">;</span><span class="s1"> 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... url) { 
+            Log.e(</span><span class="s3">&quot;BACK&quot;</span><span class="s0">, </span><span class="s3">&quot;ASPDF&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+ 
+                </span><span class="s4">//CHAMA O ARQUIVO DE TEXTO</span><span class="s1"> 
+                </span><span class="s4">//SE TIVER EM BRANCO, CONTINUA ESSA EXECUCAO</span><span class="s1"> 
+                </span><span class="s4">//SENAO</span><span class="s1"> 
+                </span><span class="s4">//A GENTE PEGA AS MSGS TROCADAS COM BASE NO ID (url[1])</span><span class="s1"> 
+                </span><span class="s4">//ARMAZENA NO LIST&lt;&gt;</span><span class="s1"> 
+                </span><span class="s4">//E ALTERA NO LISTVIEW !</span><span class="s1"> 
+                </span><span class="s4">//SAFEEEEEEE</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;URL MEU TRUTA&quot;</span><span class="s0">, </span><span class="s1">url[</span><span class="s2">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s2">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s3">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;Log&quot;</span><span class="s0">, </span><span class="s3">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(get.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;Log&quot;</span><span class="s0">, </span><span class="s3">&quot;2&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s4">//erro ta no servidor!!!!!!!!!!!</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;LogData&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e) { 
+                Log.e(</span><span class="s3">&quot;Erro&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+ 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+ 
+        } 
+ 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s3">&quot;Carregando mensagens...&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//Acessa o BD e verifica se há mensagens a partir do IdUsuario</span><span class="s1"> 
+            BD bd = </span><span class="s0">new </span><span class="s1">BD(getApplicationContext())</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s3">&quot;POSTEXECUTE&quot;</span><span class="s0">, </span><span class="s3">&quot;Opaaaaa&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(bd.buscar(idUsuario</span><span class="s0">, </span><span class="s1">tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">)) == </span><span class="s0">null</span><span class="s1">) { 
+                Log.e(</span><span class="s3">&quot;BD&quot;</span><span class="s0">, </span><span class="s3">&quot;NULL&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                m = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                Log.e(</span><span class="s3">&quot;BD&quot;</span><span class="s0">, </span><span class="s3">&quot;not null&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                List&lt;Mensagem&gt; listas = bd.buscar(idUsuario</span><span class="s0">, </span><span class="s1">tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;teste&quot;</span><span class="s0">, </span><span class="s1">listas.size()+</span><span class="s3">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">int </span><span class="s1">vez = </span><span class="s0">new </span><span class="s1">RepositorioUsuario().getVez()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;VEZZZZZZZZZ&quot;</span><span class="s0">, </span><span class="s1">vez+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                m = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i&lt;listas.size()</span><span class="s0">; </span><span class="s1">i++){ 
+                    Log.e(</span><span class="s3">&quot;Lista bd&quot;</span><span class="s0">, </span><span class="s1">listas.size()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    Mensagem mensagem = listas.get(i)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    m.add(i</span><span class="s0">, </span><span class="s1">mensagem)</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+                vez++</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setVez(vez)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;mensagensss&quot;</span><span class="s0">, </span><span class="s1">m.size()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+ 
+            </span><span class="s0">try </span><span class="s1">{ 
+                Log.e(</span><span class="s3">&quot;dentro&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+                JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">int </span><span class="s1">jsonLength = jsonArray.length()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;JSONLENGTH&quot;</span><span class="s0">, </span><span class="s1">jsonArray.length() + </span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s3">&quot;mensagensss&quot;</span><span class="s0">, </span><span class="s1">m.size()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//Log.e(&quot;BUSCAR&quot;, &quot;b&quot; + m.get(0).getTexto());</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">;</span><span class="s1">i &lt; jsonArray.length()</span><span class="s0">; </span><span class="s1">i++){ 
+ 
+ 
+                    JSONObject json = jsonArray.getJSONObject(i)</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;JSONOBJECT:::: &quot;</span><span class="s0">, </span><span class="s1">json.toString())</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//Log.e(&quot;JSON ID: &quot;, json.getInt(&quot;idUsuario&quot;) + &quot;&quot;);</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;ID USUARIO: &quot;</span><span class="s0">, </span><span class="s1">idUsuario+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//if (json.getInt(&quot;idUsuario&quot;) == Integer.parseInt(idUsuario)) {</span><span class="s1"> 
+                        Log.e(</span><span class="s3">&quot;IF&quot;</span><span class="s0">, </span><span class="s3">&quot;if&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        Mensagem mensagem = </span><span class="s0">new </span><span class="s1">Mensagem()</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setData(json.getString(</span><span class="s3">&quot;data&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setHora(json.getString(</span><span class="s3">&quot;hora&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setId(json.getInt(</span><span class="s3">&quot;id&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setMatriculaRemetente(json.getString(</span><span class="s3">&quot;matriculaRemetente&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setMatriculaDestinatario(json.getString(</span><span class="s3">&quot;matriculaDestinatario&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        RepositorioUsuario user = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+                        mensagem.setTexto(json.getString(</span><span class="s3">&quot;texto&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s4">//e.setTipo((Tipo) json.get(&quot;tipo&quot;));</span><span class="s1"> 
+ 
+                        </span><span class="s4">//mensagem.setMatricula(json.getString(&quot;matricula&quot;));</span><span class="s1"> 
+                        mensagem.setTipo(tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        bd.inserir(mensagem</span><span class="s0">, </span><span class="s1">tipo.substring(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s2">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">json.getString(</span><span class="s3">&quot;matriculaRemetente&quot;</span><span class="s1">)</span><span class="s0">, </span><span class="s1">json.getString(</span><span class="s3">&quot;matriculaDestinatario&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                        m.add(mensagem)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//}</span><span class="s1"> 
+ 
+                } 
+                </span><span class="s4">//Log.e(&quot;M&quot;, &quot;SIZE: &quot; + m.size());</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            Log.e(</span><span class="s3">&quot;mensagensss&quot;</span><span class="s0">, </span><span class="s1">m.size()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            mList = (ListView) findViewById(R.id.listView50)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(m != </span><span class="s0">null</span><span class="s1">) { 
+                RepositorioUsuario repositorioUsuario = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+                mList.setAdapter(</span><span class="s0">new </span><span class="s1">MensagemAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">m</span><span class="s0">, </span><span class="s1">repositorioUsuario.getTipo()))</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">// user.setMensagens(m);</span><span class="s1"> 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">PostMensagem </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                Log.e(</span><span class="s3">&quot;url&quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s2">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL (strings[</span><span class="s2">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s3">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s3">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s3">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s3">&quot;Accept&quot;</span><span class="s0">, </span><span class="s3">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s2">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//jsonLengthU++;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;asdf&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s4">// br = new BufferedReader(new InputStreamReader(connection.getInputStream()));</span><span class="s1"> 
+                </span><span class="s4">//data.append(br.readLine());</span><span class="s1"> 
+ 
+                Log.e(</span><span class="s3">&quot;Coonnection&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseMessage() +</span><span class="s3">&quot; ......&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(connection.getResponseCode() == </span><span class="s2">200</span><span class="s1">) 
+                    Log.e(</span><span class="s3">&quot;CONNECTION&quot;</span><span class="s0">, </span><span class="s3">&quot;DE BOA!&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">else</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;PROB&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseMessage())</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                </span><span class="s4">//Toast.makeText(getApplicationContext(), &quot;Erro&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;EXCP&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+ 
+            String datafim = data.toString()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">/*CriarArquivo criarArquivo = new CriarArquivo(); 
+            if (criarArquivo.lerArquivo(getApplicationContext()).isEmpty()){ 
+                criarArquivo.criarArquivo(json.toString(), getApplicationContext()); 
+            }else{ 
+                criarArquivo.editarArquivoPost(getApplicationContext(), &quot;,&quot; + json.toString()); 
+            }*/</span><span class="s1"> 
+ 
+            </span><span class="s0">return </span><span class="s1">datafim</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+ 
+ 
+            Log.e(</span><span class="s3">&quot;EXE&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot; </span><span class="s1">+ jsonLengthU)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s3">&quot;Execute&quot;</span><span class="s0">, </span><span class="s1">s +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>

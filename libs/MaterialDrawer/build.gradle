@@ -1,0 +1,40 @@
+buildscript {
+    ext {
+        setup = [compileSdk: 24,
+                 buildTools: "24.0.1",
+                 minSdk    : 14,
+                 targetSdk : 24]
+
+        versions = [supportLib: "24.2.0"]
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        //maven {
+        //    url 'https://maven.google.com/'
+        //    name 'Google'
+        //}
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}

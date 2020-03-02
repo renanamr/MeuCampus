@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/TxtMaterial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_toEndOf="@+id/TxtOrdem"
+        android:layout_toRightOf="@+id/TxtOrdem"
+        android:text="Nome do Material"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/md_black_1000" />
+
+    <TextView
+        android:id="@+id/TxtOrdem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="12" />
+
+    <TextView
+        android:id="@+id/TxtNomeMateria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TxtMaterial"
+        android:layout_alignStart="@+id/TxtMaterial"
+        android:layout_below="@+id/TxtMaterial"
+        android:text="Biologia" />
+</RelativeLayout>

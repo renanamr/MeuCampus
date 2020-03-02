@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>ChatUsersAdapter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ChatUsersAdapter.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.BaseAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 18/11/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">ChatUsersAdapter </span><span class="s0">extends </span><span class="s1">BaseAdapter{ 
+    List&lt;Usuario&gt; list</span><span class="s0">;</span><span class="s1"> 
+    Context context</span><span class="s0">;</span><span class="s1"> 
+    View v</span><span class="s0">;</span><span class="s1"> 
+    TextView matricula</span><span class="s0">;</span><span class="s1"> 
+    TextView mensagem</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+    </span><span class="s0">public </span><span class="s1">ChatUsersAdapter(Context context</span><span class="s0">, </span><span class="s1">List&lt;Usuario&gt; list) { 
+        </span><span class="s0">this</span><span class="s1">.context = context</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.list = list</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public int </span><span class="s1">getCount() { 
+        </span><span class="s0">return </span><span class="s1">list.size()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">Object getItem(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">return </span><span class="s1">list.get(i)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public long </span><span class="s1">getItemId(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">return </span><span class="s1">i</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View getView(</span><span class="s0">int </span><span class="s1">i</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, </span><span class="s1">ViewGroup viewGroup) { 
+        v = View.inflate(context</span><span class="s0">, </span><span class="s1">R.layout.list_chat_users</span><span class="s0">, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;Bem,&quot;</span><span class="s0">, </span><span class="s3">&quot;Chegamos aqui&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        matricula = (TextView) v.findViewById(R.id.matricula_messagem)</span><span class="s0">;</span><span class="s1"> 
+        mensagem = (TextView) v.findViewById(R.id.ultima_mensagem)</span><span class="s0">;</span><span class="s1"> 
+        matricula.setText(list.get(i).getMatricula())</span><span class="s0">;</span><span class="s1"> 
+ 
+        mensagem.setText(list.get(i).getLastM())</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">return </span><span class="s1">v</span><span class="s0">;</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>

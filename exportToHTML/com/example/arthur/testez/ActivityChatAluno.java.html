@@ -1,0 +1,298 @@
+<html>
+<head>
+<title>ActivityChatAluno.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(104,151,187); }
+.s5 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ActivityChatAluno.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStreamWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by renan on 01/06/2017. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">ActivityChatAluno </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">public static </span><span class="s1">List&lt;Usuario&gt; listUsuarios = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+    ListView listView</span><span class="s0">;</span><span class="s1"> 
+    Toolbar toolbar</span><span class="s0">;</span><span class="s1"> 
+    Button limpar</span><span class="s0">;</span><span class="s1"> 
+    String url1</span><span class="s0">;</span><span class="s1"> 
+    FloatingActionButton fab</span><span class="s0">;</span><span class="s1"> 
+    String tipo</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_chat_aluno)</span><span class="s0">;</span><span class="s1"> 
+        url1 = getResources().getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        tipo = getIntent().getStringExtra(</span><span class="s3">&quot;tipo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        tipo = tipo.substring(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">tipo.length()-</span><span class="s4">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">new </span><span class="s1">GetUsuarios().execute(url1+</span><span class="s3">&quot;mensagem/dg&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        fab = (FloatingActionButton) findViewById(R.id.novamensagem)</span><span class="s0">;</span><span class="s1"> 
+        fab.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityNovaConversaAluno.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                startActivity(i)</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        limpar = (Button) findViewById(R.id.btnLimpar)</span><span class="s0">;</span><span class="s1"> 
+        limpar.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                BD b = </span><span class="s0">new </span><span class="s1">BD(getApplicationContext())</span><span class="s0">;</span><span class="s1"> 
+                b.delete()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;LER ARQUIVO&quot;</span><span class="s0">, </span><span class="s3">&quot;NULL PLS &quot; </span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        toolbar = (Toolbar) findViewById(R.id.tb_chatinicio)</span><span class="s0">;</span><span class="s1"> 
+        toolbar.setTitle(</span><span class="s3">&quot;Caixa de entrada&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+        setSupportActionBar(toolbar)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        toolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+    } 
+</span><span class="s5">//pecisamudar</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onRestart() { 
+        </span><span class="s0">if </span><span class="s1">(tipo.equals(</span><span class="s3">&quot;COADES/NC&quot;</span><span class="s1">)) 
+            </span><span class="s0">new </span><span class="s1">GetUsuarios().execute(url1+</span><span class="s3">&quot;mensagem/listaUsuarios&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">else</span><span class="s1"> 
+        </span><span class="s0">if</span><span class="s1">(tipo.equals(</span><span class="s3">&quot;DG/NC&quot;</span><span class="s1">)) 
+            </span><span class="s0">new </span><span class="s1">GetUsuarios().execute(url1+</span><span class="s3">&quot;mensagem/dg&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onRestart()</span><span class="s0">;</span><span class="s1"> 
+    } 
+</span><span class="s5">//ate aqui</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">aviso(</span><span class="s0">int </span><span class="s1">i){ 
+        TextView edt = (TextView) findViewById(R.id.semmsg)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(i ==</span><span class="s4">0</span><span class="s1">) 
+            edt.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">else</span><span class="s1"> 
+            edt.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetUsuarios </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">List&lt;Usuario&gt;&gt; { 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">a =</span><span class="s4">0</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">List&lt;Usuario&gt; doInBackground(String... url) { 
+            Log.e(</span><span class="s3">&quot;BACK&quot;</span><span class="s0">, </span><span class="s3">&quot;ASPDF&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s4">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s3">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;Log&quot;</span><span class="s0">, </span><span class="s3">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(get.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s3">&quot;Log&quot;</span><span class="s0">, </span><span class="s3">&quot;2&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s3">&quot;LogData&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e) { 
+                Log.e(</span><span class="s3">&quot;Erro&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+            String s = data.toString()</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">if </span><span class="s1">(s.equals(</span><span class="s3">&quot;[]&quot;</span><span class="s1">)){ 
+                a=</span><span class="s4">0</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return null;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                a=  </span><span class="s4">1</span><span class="s0">;</span><span class="s1"> 
+            } 
+            List&lt;Usuario&gt; usuarios</span><span class="s0">;</span><span class="s1"> 
+ 
+            StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+            BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+            BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                Log.e(</span><span class="s3">&quot;dentro&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+                JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">int </span><span class="s1">jsonLength = jsonArray.length()</span><span class="s0">;</span><span class="s1"> 
+                Log.d(</span><span class="s3">&quot;JSONARRAY&quot;</span><span class="s0">, </span><span class="s1">jsonArray.getJSONObject(</span><span class="s4">0</span><span class="s1">).length() + </span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                usuarios = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s5">//Log.d(&quot;JSON2&quot;, jsonArray.get(1).toString());</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s0">;</span><span class="s1">i &lt; jsonLength</span><span class="s0">; </span><span class="s1">i++){ 
+                    Log.e(</span><span class="s3">&quot;JSONARRAYLENGTH&quot;</span><span class="s0">, </span><span class="s1">jsonArray.length()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    Log.d(</span><span class="s3">&quot;INT I&quot;</span><span class="s0">, </span><span class="s1">i +</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s5">/*Type type = new TypeToken&lt;ArrayList&lt;Mensagem&gt;&gt;(){}.getType(); 
+                    ArrayList&lt;Mensagem&gt; arrayMensagem = new Gson().fromJson(json.toString(), type); 
+                    usuario.setMensagens(arrayMensagem);*/</span><span class="s1"> 
+ 
+                    </span><span class="s5">/*try { 
+                        usuario.setMensagens((List&lt;Mensagem&gt;) json.get(&quot;mensagens&quot;)); 
+                    }catch (Exception e){ 
+                        Log.e(&quot;LIST EXCEPTION&quot;, e.getMessage()); 
+                    }*/</span><span class="s1"> 
+                    </span><span class="s5">//usuario.setMatricula(json.getString(&quot;matricula&quot;));</span><span class="s1"> 
+ 
+ 
+                    JSONObject json = jsonArray.getJSONObject(i)</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">json.toString()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    Usuario usuario = </span><span class="s0">new </span><span class="s1">Gson().fromJson(json.toString()</span><span class="s0">, </span><span class="s1">Usuario.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    usuario.setId(json.getInt(</span><span class="s3">&quot;id&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+                    Log.e(</span><span class="s3">&quot;CONEXÃO&quot;</span><span class="s0">, </span><span class="s3">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    String url2=</span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(tipo.equals(</span><span class="s3">&quot;COADES/NC&quot;</span><span class="s1">)) 
+                        url2 = url1+</span><span class="s3">&quot;mensagem/getUltima&quot;</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">else</span><span class="s1"> 
+                    </span><span class="s0">if</span><span class="s1">(tipo.equals(</span><span class="s3">&quot;DG/NC&quot;</span><span class="s1">)) 
+                        url2 = url1+</span><span class="s3">&quot;mensagem/dg/getUltima&quot;</span><span class="s0">;</span><span class="s1"> 
+                    HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL (url2).openConnection()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                    connection.setRequestMethod(</span><span class="s3">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    connection.setRequestProperty(</span><span class="s3">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s3">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    connection.setRequestProperty(</span><span class="s3">&quot;Accept&quot;</span><span class="s0">, </span><span class="s3">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;CONEXÃO&quot;</span><span class="s0">, </span><span class="s3">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                    bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+ 
+                    bw.write(String.valueOf(</span><span class="s0">new </span><span class="s1">Gson().toJson(usuario)))</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s5">//jsonLengthU++;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;asdf&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(</span><span class="s0">new </span><span class="s1">Gson().toJson(usuario)))</span><span class="s0">;</span><span class="s1"> 
+                    bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                    data= </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+                    br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                    data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;CONEXÃO&quot;</span><span class="s0">, </span><span class="s3">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                    </span><span class="s0">if </span><span class="s1">(connection.getResponseCode() == </span><span class="s4">200</span><span class="s1">) 
+                        Log.e(</span><span class="s3">&quot;CONNECTION&quot;</span><span class="s0">, </span><span class="s3">&quot;200&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">else</span><span class="s1"> 
+                        Log.e(</span><span class="s3">&quot;PROB&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseMessage())</span><span class="s0">;</span><span class="s1"> 
+                    connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+                    Log.d (</span><span class="s3">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+                    Mensagem mensagem = </span><span class="s0">new </span><span class="s1">Gson().fromJson(data.toString()</span><span class="s0">, </span><span class="s1">Mensagem.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    List&lt;Mensagem&gt; mensagensUsuario = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+                    mensagensUsuario.add(mensagem)</span><span class="s0">;</span><span class="s1"> 
+                    usuario.setMensagens(mensagensUsuario)</span><span class="s0">;</span><span class="s1"> 
+                    usuarios.add(usuario)</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;MATRICULA&quot;</span><span class="s0">, </span><span class="s1">usuario.getMatricula() + </span><span class="s3">&quot;null&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;MENSAGEM&quot;</span><span class="s0">, </span><span class="s1">usuario.getMensagens().get(</span><span class="s4">0</span><span class="s1">) + </span><span class="s3">&quot;null&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                } 
+ 
+ 
+                listView = (ListView) findViewById(R.id.list_usuarios_mensagem)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">if </span><span class="s1">(usuarios==</span><span class="s0">null</span><span class="s1">){ 
+                    Log.e(</span><span class="s3">&quot;USUARIOS&quot;</span><span class="s0">, </span><span class="s3">&quot;NULL&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                }</span><span class="s0">else </span><span class="s1">Log.e(</span><span class="s3">&quot;USUARIOS&quot;</span><span class="s0">, </span><span class="s3">&quot;NOT NULL&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return </span><span class="s1">(usuarios)</span><span class="s0">;</span><span class="s1"> 
+ 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s3">&quot;EXCPTION: &quot;</span><span class="s0">,</span><span class="s1">e.getMessage() + </span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return null;</span><span class="s1"> 
+            } 
+ 
+        } 
+ 
+        </span><span class="s0">private void </span><span class="s1">set(List&lt;Usuario&gt; usuarios){ 
+            listView = (ListView) findViewById(R.id.list_usuarios_mensagem)</span><span class="s0">;</span><span class="s1"> 
+            ChatUsersAdapter chat = </span><span class="s0">new </span><span class="s1">ChatUsersAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">usuarios)</span><span class="s0">;</span><span class="s1"> 
+            listView.setAdapter(chat)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(</span><span class="s0">final </span><span class="s1">List&lt;Usuario&gt; usuarios) { 
+            aviso(a)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(usuarios == </span><span class="s0">null</span><span class="s1">) { 
+                </span><span class="s0">return;</span><span class="s1"> 
+            } 
+            listView = (ListView) findViewById(R.id.list_usuarios_mensagem)</span><span class="s0">;</span><span class="s1"> 
+            ChatUsersAdapter chat = </span><span class="s0">new </span><span class="s1">ChatUsersAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">usuarios)</span><span class="s0">;</span><span class="s1"> 
+            listUsuarios = usuarios</span><span class="s0">;</span><span class="s1"> 
+            listView.setAdapter(chat)</span><span class="s0">;</span><span class="s1"> 
+ 
+            listView.setOnItemClickListener(</span><span class="s0">new </span><span class="s1">AdapterView.OnItemClickListener() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onItemClick(AdapterView&lt;?&gt; adapterView</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, long </span><span class="s1">l) { 
+                    Bundle a = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                    a.putInt(</span><span class="s3">&quot;idusuario&quot;</span><span class="s0">, </span><span class="s1">usuarios.get(i).getId())</span><span class="s0">;</span><span class="s1"> 
+                    a.putString(</span><span class="s3">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">tipo)</span><span class="s0">;</span><span class="s1"> 
+                    Log.e(</span><span class="s3">&quot;Intent&quot;</span><span class="s0">, </span><span class="s1">usuarios.get(i).getId()+</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ChatActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    intent.putExtras(a)</span><span class="s0">;</span><span class="s1"> 
+                    startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                } 
+            })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        } 
+    } 
+ 
+} 
+ 
+</span></pre>
+</body>
+</html>

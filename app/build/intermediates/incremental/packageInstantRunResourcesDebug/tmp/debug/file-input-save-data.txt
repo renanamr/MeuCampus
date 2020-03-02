@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Wed Jun 20 20:20:47 GMT 2018
+0.baseType=DIRECTORY
+0.base=/home/renan/Dropbox/TesteZ/app/build/intermediates/assets/debug
+0.path=fonts/materialdrawerfont-font-v5.0.0.ttf
+0.set=ASSET
+count=1

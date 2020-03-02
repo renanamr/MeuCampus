@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>NoticiaAdapter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(128,128,128); }
+.s5 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NoticiaAdapter.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.Bitmap</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.Image</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Base64</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.webkit.WebView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.BaseAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 15/09/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">NoticiaAdapter </span><span class="s0">extends </span><span class="s1">BaseAdapter{ 
+    </span><span class="s0">private </span><span class="s1">Context mContext</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static </span><span class="s1">List&lt;Noticia&gt; mList</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">NoticiaAdapter(Context mContext</span><span class="s0">, </span><span class="s1">List&lt;Noticia&gt; mList) { 
+        </span><span class="s0">this</span><span class="s1">.mContext = mContext</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.mList = mList</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public int </span><span class="s1">getCount() { 
+        </span><span class="s0">return </span><span class="s1">mList.size()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">Object getItem(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">return </span><span class="s1">mList.get(i)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public long </span><span class="s1">getItemId(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">return </span><span class="s1">i</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">int </span><span class="s1">index = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+    ImageView img</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View getView(</span><span class="s0">int </span><span class="s1">i</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, </span><span class="s1">ViewGroup viewGroup) { 
+        index = i</span><span class="s0">;</span><span class="s1"> 
+        View v = View.inflate(mContext</span><span class="s0">, </span><span class="s1">R.layout.list_layout</span><span class="s0">, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        TextView tit = (TextView) v.findViewById(R.id.txtTituloN)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//TextView desc = (TextView) v.findViewById(R.id.txtDescricaoN);</span><span class="s1"> 
+        TextView dat = (TextView) v.findViewById(R.id.txtDataN)</span><span class="s0">;</span><span class="s1"> 
+        img = (ImageView) v.findViewById(R.id.imageNoticia)</span><span class="s0">;</span><span class="s1"> 
+        dat.setText(mList.get(i).getData())</span><span class="s0">;</span><span class="s1"> 
+        tit.setText(mList.get(i).getTitulo())</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if</span><span class="s1">(mList.get(i).getImagemLink()!=</span><span class="s0">null</span><span class="s1">){ 
+ 
+            download d = </span><span class="s0">new </span><span class="s1">download()</span><span class="s0">;</span><span class="s1"> 
+            d.setImageView(img)</span><span class="s0">;</span><span class="s1"> 
+            d.execute(mList.get(i).getImagemLink())</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">else</span><span class="s1"> 
+            img.setVisibility(View.GONE)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//desc.setText(mList.get(i).getDescricao());</span><span class="s1"> 
+        Log.e(</span><span class="s5">&quot;ALTERA NO LISTVIEW&quot;</span><span class="s0">, </span><span class="s5">&quot;ok&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">return </span><span class="s1">v</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+    </span><span class="s0">public </span><span class="s1">List&lt;Noticia&gt; getList(){ 
+        </span><span class="s0">return </span><span class="s1">mList</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">download </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">Bitmap&gt;{ 
+ 
+        </span><span class="s0">private </span><span class="s1">ImageView imageView</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">public </span><span class="s1">ImageView getImageView() { 
+            </span><span class="s0">return </span><span class="s1">imageView</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">public void </span><span class="s1">setImageView(ImageView imageView) { 
+            </span><span class="s0">this</span><span class="s1">.imageView = imageView</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">Bitmap doInBackground(String... strings) { 
+            Log.e(</span><span class="s5">&quot;IMAGE LINK&quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s3">0</span><span class="s1">]+</span><span class="s5">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                java.net.URL url = </span><span class="s0">new </span><span class="s1">java.net.URL(</span><span class="s5">&quot;http://&quot;</span><span class="s1">+strings[</span><span class="s3">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) url 
+                        .openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                InputStream input = connection.getInputStream()</span><span class="s0">;</span><span class="s1"> 
+                Bitmap myBitmap = BitmapFactory.decodeStream(input)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return </span><span class="s1">myBitmap</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">catch </span><span class="s1">(IOException e) { 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return null;</span><span class="s1"> 
+            } 
+        } 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(Bitmap aVoid) { 
+            imageView.setImageBitmap(aVoid)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//Log.e(&quot;iMG&quot;, aVoid.toString());</span><span class="s1"> 
+ 
+        } 
+ 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.meucampus.arthur.testez">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".Initializer"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyTheme">
+
+        <!--
+        <provider
+            android:authorities="${applicationID}.com.meucampus.arthur.testez"
+            android:name=".GenericFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="FileP"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        -->
+        <activity android:name=".TelaDeEspera">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ActivityLogin" />
+        <activity android:name=".NoticiaExpand" />
+        <activity android:name=".MainActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".EventExpand" />
+        <activity android:name=".CalculadoraIf" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".NoticiaCadastro" />
+        <activity android:name=".EventoCadastro" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.MyTheme" />
+        <activity
+            android:name=".ActivityChatCoades"
+            android:theme="@style/MaterialTheme.ActionBar" />
+        <activity android:name=".ActivityNovaConversaCoades" />
+        <activity android:name=".ActivityNovaConversaAluno" />
+        <activity android:name=".ActivityHorario" />
+        <activity android:name=".ActivityHorarioVisualizar" />
+
+        <service android:name=".Services.ServicoNotificacao" />
+        <!--
+        <service android:name="com.meucampus.arthur.testez.Services.ServicoGetProfessores" />
+        <service android:name="com.meucampus.arthur.testez.Services.ServicoTeste"/>
+        <service android:name="com.meucampus.arthur.testez.Services.ServicoMaterial"/>
+        -->
+        <service android:name=".Services.ConfiguracoesIniciais" />
+        <service android:name=".Services.ServicoAtualizacao" />
+
+        <activity android:name=".ActivityTurmas" />
+        <activity android:name=".ActivityTurmasDetalhes" />
+        <activity android:name=".ActivityIniciar" />
+        <activity android:name=".ActivityNovaConversaProfessor" />
+
+        <receiver
+            android:name=".Services.BroadcastServicce"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".Fragments.PdfOpen"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape"
+            ></activity>
+    </application>
+
+</manifest>

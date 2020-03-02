@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>EventExpand.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+EventExpand.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.webkit.WebView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">EventExpand </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">private </span><span class="s1">Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView txtTitulo</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView txtDescricao</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView txtData</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView txtInicio</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">TextView txtFim</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">WebView imagem</span><span class="s0">;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_evento_expand)</span><span class="s0">;</span><span class="s1"> 
+        Intent intent = getIntent()</span><span class="s0">;</span><span class="s1"> 
+        Bundle bundle = intent.getExtras()</span><span class="s0">;</span><span class="s1"> 
+        String titulo = bundle.getString(</span><span class="s2">&quot;titulo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String descricao = bundle.getString(</span><span class="s2">&quot;descricao&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String dataI = bundle.getString(</span><span class="s2">&quot;dataInicio&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String dataF = bundle.getString(</span><span class="s2">&quot;dataFim&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String link</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">try</span><span class="s1">{ 
+            link = bundle.getString(</span><span class="s2">&quot;link&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+            e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        mToolbar = (Toolbar) findViewById(R.id.tb_Evento)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar.setTitle(</span><span class="s2">&quot;Evento&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+ 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+ 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        txtTitulo = (TextView) findViewById(R.id.TituloEventoE)</span><span class="s0">;</span><span class="s1"> 
+        txtTitulo.setText(titulo)</span><span class="s0">;</span><span class="s1"> 
+        txtDescricao = (TextView) findViewById(R.id.DescricaoEventoE)</span><span class="s0">;</span><span class="s1"> 
+        txtDescricao.setText(descricao)</span><span class="s0">;</span><span class="s1"> 
+        txtInicio = (TextView) findViewById(R.id.TxtData7)</span><span class="s0">;</span><span class="s1"> 
+        txtInicio.setText(dataI)</span><span class="s0">;</span><span class="s1"> 
+        TextView periodo = (TextView) findViewById(R.id.txtPeriodoE)</span><span class="s0">;</span><span class="s1"> 
+        periodo.setText(dataI+</span><span class="s2">&quot;-&quot;</span><span class="s1">+dataF)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

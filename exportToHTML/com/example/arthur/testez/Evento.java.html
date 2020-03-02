@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>Evento.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Evento.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 15/09/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">Evento { 
+    </span><span class="s0">private int </span><span class="s1">id</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String titulo</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">String descricao</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">Tipo tipo</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+    </span><span class="s0">private </span><span class="s1">String imageLink</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">String getImageLink() { 
+        </span><span class="s0">return </span><span class="s1">imageLink</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setImageLink(String imageLink) { 
+        </span><span class="s0">this</span><span class="s1">.imageLink = imageLink</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">String dataPublicacao</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">String dataInicio</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">String dataFim</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String local</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">setLocal(String local){ 
+        </span><span class="s0">this</span><span class="s1">.local = local</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getLocal(){ 
+        </span><span class="s0">return </span><span class="s1">local</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public </span><span class="s1">Evento(String titulo</span><span class="s0">, </span><span class="s1">String descricao</span><span class="s0">, </span><span class="s1">Tipo tipo</span><span class="s0">, </span><span class="s1">String dataPublicacao</span><span class="s0">, </span><span class="s1">String dataInicio</span><span class="s0">,</span><span class="s1"> 
+                  String dataFim) { 
+        </span><span class="s0">super</span><span class="s1">()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.titulo = titulo</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.descricao = descricao</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.tipo = tipo</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">this</span><span class="s1">.dataPublicacao = dataPublicacao</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.dataInicio = dataInicio</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.dataFim = dataFim</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Evento(){ 
+ 
+    } 
+    </span><span class="s0">public </span><span class="s1">String getTitulo() { 
+        </span><span class="s0">return </span><span class="s1">titulo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTitulo(String titulo) { 
+        </span><span class="s0">this</span><span class="s1">.titulo = titulo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getDescricao() { 
+        </span><span class="s0">return </span><span class="s1">descricao</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setDescricao(String descricao) { 
+        </span><span class="s0">this</span><span class="s1">.descricao = descricao</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Tipo getTipo() { 
+        </span><span class="s0">return </span><span class="s1">tipo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTipo(Tipo tipo) { 
+        </span><span class="s0">this</span><span class="s1">.tipo = tipo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+ 
+    </span><span class="s0">public </span><span class="s1">String getDataPublicacao() { 
+        </span><span class="s0">return </span><span class="s1">dataPublicacao</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setDataPublicacao(String dataPublicacao) { 
+        </span><span class="s0">this</span><span class="s1">.dataPublicacao = dataPublicacao</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getDataInicio() { 
+        </span><span class="s0">return </span><span class="s1">dataInicio</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setDataInicio(String dataInicio) { 
+        </span><span class="s0">this</span><span class="s1">.dataInicio = dataInicio</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getDataFim() { 
+        </span><span class="s0">return </span><span class="s1">dataFim</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setDataFim(String dataFim) { 
+        </span><span class="s0">this</span><span class="s1">.dataFim = dataFim</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+} 
+ 
+</span></pre>
+</body>
+</html>

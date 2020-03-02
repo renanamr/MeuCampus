@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MeuCampus</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="url">http://200.137.2.185/meucampus/service/</string>
+    <array name="titles_tab">
+        <item>Bimestre</item>
+        <item>Semestre</item>
+    </array>
+    <string-array name="turma_nomes">
+        <item>Info2M</item>
+        <item>Info4V</item>
+
+    </string-array>
+    <string-array name="materia_nomes">
+        <item>Português</item>
+        <item>PEOO</item>
+        <item>Matématica</item>
+
+    </string-array>
+
+    <string-array name="setor_selecionado">
+        <item>DG</item>
+        <item>COADES</item>
+
+    </string-array>
+
+    <string-array name="materia2_nomes">
+        <item>Português</item>
+        <item>Matématica</item>
+
+    </string-array>
+    <string name="menu">Semestral</string>
+    <string name="menu1">Bistral</string>
+    <string name="title_activity_login">Sign in</string>
+</resources>

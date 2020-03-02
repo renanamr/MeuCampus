@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>Usuario.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Usuario.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by ARTHUR on 16/11/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">Usuario { 
+ 
+    </span><span class="s0">private </span><span class="s1">String nome</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String matricula</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">String permissoes = </span><span class="s3">&quot;0&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Horario horario</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String[] turma</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String lastM</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">String getLastM() { 
+        </span><span class="s0">return </span><span class="s1">lastM</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setLastM(String lastM) { 
+        </span><span class="s0">this</span><span class="s1">.lastM = lastM</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">String url</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">String getUrl() { 
+        </span><span class="s0">return </span><span class="s1">url</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setUrl(String url) { 
+        </span><span class="s0">this</span><span class="s1">.url = url</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">Professor professor</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">Professor getProfessor() { 
+        </span><span class="s0">return </span><span class="s1">professor</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setProfessor(Professor professor) { 
+        </span><span class="s0">this</span><span class="s1">.professor = professor</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public </span><span class="s1">String[] getTurma() { 
+        </span><span class="s0">return </span><span class="s1">turma</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setTurma(String[] turma) { 
+        </span><span class="s0">this</span><span class="s1">.turma = turma</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public </span><span class="s1">Usuario (String matricula</span><span class="s0">,  </span><span class="s1">String tipo</span><span class="s0">, </span><span class="s1">String[] turma){ 
+ 
+ 
+        </span><span class="s0">this</span><span class="s1">.matricula = matricula</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.tipo = tipo</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.turma = turma</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setMensagens(List&lt;Mensagem&gt; m){ 
+        </span><span class="s0">this</span><span class="s1">.mensagens = m</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Usuario(){ 
+ 
+    } 
+    </span><span class="s0">private </span><span class="s1">List&lt;Mensagem&gt; mensagens</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private int </span><span class="s1">id</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public  </span><span class="s1">List&lt;Mensagem&gt; getMensagens() { 
+        </span><span class="s0">return </span><span class="s1">mensagens</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">addMensagem(Mensagem m){ 
+        </span><span class="s0">if </span><span class="s1">(mensagens == </span><span class="s0">null</span><span class="s1">){ 
+            mensagens = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        } 
+        mensagens.add(m)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+ 
+    </span><span class="s0">public </span><span class="s1">String getTipo() { 
+        </span><span class="s0">return </span><span class="s1">tipo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTipo(String tipo) { 
+        </span><span class="s0">this</span><span class="s1">.tipo = tipo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getMatricula() { 
+        </span><span class="s0">return </span><span class="s1">matricula</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setMatricula(String matricula) { 
+        </span><span class="s0">this</span><span class="s1">.matricula = matricula</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getNome() { 
+        </span><span class="s0">return </span><span class="s1">nome</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setNome(String nome) { 
+        </span><span class="s0">this</span><span class="s1">.nome = nome</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getId() { 
+        </span><span class="s0">return </span><span class="s1">id</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setId(</span><span class="s0">int </span><span class="s1">id) { 
+        </span><span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getPermissoes() { 
+        </span><span class="s0">return </span><span class="s1">permissoes</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setPermissoes(String permissoes) { 
+        </span><span class="s0">this</span><span class="s1">.permissoes = permissoes</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public </span><span class="s1">Horario getHorario() { 
+        </span><span class="s0">return </span><span class="s1">horario</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setHorario(Horario horario) { 
+        </span><span class="s0">this</span><span class="s1">.horario = horario</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">private </span><span class="s1">String tipo</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String curso</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">String getCurso() { 
+        </span><span class="s0">return </span><span class="s1">curso</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setCurso(String curso) { 
+        </span><span class="s0">this</span><span class="s1">.curso = curso</span><span class="s0">;</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>

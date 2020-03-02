@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>ActivityHorario.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ActivityHorario.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Notification</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.Ringtone</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.RingtoneManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.ActionBar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.NotificationCompat</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ArrayAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Spinner</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.meucampus.arthur.testez.ActivityHorarioVisualizar</span><span class="s0">;</span><span class="s1">
+</span><span class="s0">import </span><span class="s1">com.meucampus.arthur.testez.R</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">ActivityHorario </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Spinner spinner</span><span class="s0">;</span><span class="s1"> 
+    ArrayAdapter&lt;CharSequence&gt; adapter</span><span class="s0">;</span><span class="s1"> 
+    String turma</span><span class="s0">;</span><span class="s1"> 
+    String[] turmasProfessor</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">String horario[][]</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        turmasProfessor = </span><span class="s0">new </span><span class="s1">RepositorioUsuario().getTurma()</span><span class="s0">;</span><span class="s1"> 
+ 
+        Log.e(</span><span class="s2">&quot;TURMAS&quot;</span><span class="s0">, </span><span class="s1">turmasProfessor[</span><span class="s3">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_horario)</span><span class="s0">;</span><span class="s1"> 
+        spinner = (Spinner) findViewById(R.id.spn)</span><span class="s0">;</span><span class="s1"> 
+ 
+        ArrayList&lt;String&gt; spinnerArray = </span><span class="s0">new </span><span class="s1">ArrayList&lt;String&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i =</span><span class="s3">0</span><span class="s0">;</span><span class="s1">i&lt;=</span><span class="s3">10</span><span class="s0">;</span><span class="s1">i++){ 
+            </span><span class="s0">if</span><span class="s1">(turmasProfessor[i] != </span><span class="s0">null</span><span class="s1">){ 
+                spinnerArray.add(turmasProfessor[i])</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1"> 
+                </span><span class="s0">break;</span><span class="s1"> 
+        } 
+ 
+        ArrayAdapter&lt;String&gt; spinnerArrayAdapter = </span><span class="s0">new </span><span class="s1">ArrayAdapter&lt;String&gt;(getApplicationContext()</span><span class="s0">, </span><span class="s1">android.R.layout.simple_spinner_dropdown_item</span><span class="s0">, </span><span class="s1">spinnerArray)</span><span class="s0">;</span><span class="s1"> 
+ 
+        spinner.setAdapter(spinnerArrayAdapter)</span><span class="s0">;</span><span class="s4">//</span><span class="s1"> 
+        spinner.setOnItemSelectedListener(</span><span class="s0">new </span><span class="s1">AdapterView.OnItemSelectedListener() { 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onItemSelected(AdapterView&lt;?&gt; parent</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, int </span><span class="s1">position</span><span class="s0">, long </span><span class="s1">id) { 
+ 
+                turma = parent.getSelectedItem().toString()</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onNothingSelected(AdapterView&lt;?&gt; parent) { 
+ 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Avancar(View view){ 
+ 
+ 
+ 
+        Bundle a = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+        a.putString(</span><span class="s2">&quot;turma&quot;</span><span class="s0">, </span><span class="s1">turma)</span><span class="s0">;</span><span class="s1"> 
+        Intent  intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityHorarioVisualizar.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        intent.putExtras(a)</span><span class="s0">;</span><span class="s1"> 
+        startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

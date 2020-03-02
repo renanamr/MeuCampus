@@ -1,0 +1,1 @@
+[{"tipo":1,"titulo":"NOTÍCIA 1","descricao":"Teste, teste, teste!","isEvento":false,"dataPublicacao":"26/09/2016","dataInicio":"01/01/1970","dataFim":"01/01/1970","imagem":null},{"tipo":2,"titulo":"EVENTO 1","descricao":"Evento Teste, Evento teste...","isEvento":true,"dataPublicacao":"26/09/2016","dataInicio":"27/09/2016","dataFim":"28/09/2016"}]

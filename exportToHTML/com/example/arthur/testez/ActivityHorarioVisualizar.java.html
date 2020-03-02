@@ -1,0 +1,428 @@
+<html>
+<head>
+<title>ActivityHorarioVisualizar.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(104,151,187); }
+.s3 { color: rgb(128,128,128); }
+.s4 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ActivityHorarioVisualizar.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Notification</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.Ringtone</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.RingtoneManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Build</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.ColorInt</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AlertDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.NotificationCompat</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.google.gson.JsonObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStreamWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.ProtocolException</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.security.PrivateKey</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">ActivityHorarioVisualizar </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    String materia</span><span class="s0">,</span><span class="s1">materiaA</span><span class="s0">;</span><span class="s1"> 
+    Button buttons[][]=</span><span class="s0">new </span><span class="s1">Button[</span><span class="s2">6</span><span class="s1">][</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">l</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public static </span><span class="s1">String[][] horarioManha = </span><span class="s0">new </span><span class="s1">String[</span><span class="s2">6</span><span class="s1">][</span><span class="s2">5</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static </span><span class="s1">List&lt;Disciplina&gt; disciplinas = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static </span><span class="s1">String url</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public  static </span><span class="s1">Horario horario = </span><span class="s0">new </span><span class="s1">Horario()</span><span class="s0">;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s3">//Cria um metodo la no horarario service</span><span class="s1"> 
+        </span><span class="s3">//ele vai receber um professor pelo json</span><span class="s1"> 
+        </span><span class="s3">//e pelo path param, vc passa a turma (String)</span><span class="s1"> 
+        </span><span class="s3">// &amp;&amp;</span><span class="s1"> 
+        </span><span class="s3">//lembra de receber os dados do possivel professor pelo json</span><span class="s1"> 
+        </span><span class="s3">//la no activity login e add no repositorio</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_horario_visualizar)</span><span class="s0">;</span><span class="s1"> 
+        url = getResources().getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        Button btnTrocar = (Button) findViewById(R.id.buttonTrocar)</span><span class="s0">;</span><span class="s1"> 
+        RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(!repo.getTipo().equals(</span><span class="s4">&quot;PROFESSOR&quot;</span><span class="s1">)) { 
+            btnTrocar.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+            Intent intent = getIntent()</span><span class="s0">;</span><span class="s1"> 
+ 
+            Log.e(</span><span class="s4">&quot;A&quot;</span><span class="s0">, </span><span class="s4">&quot; PROFESSOR 1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            String turma = intent.getStringExtra(</span><span class="s4">&quot;turma&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            horario.setTurma(turma)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s4">&quot;TURMA&quot;</span><span class="s0">, </span><span class="s1">turma)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            </span><span class="s0">new </span><span class="s1">getHorario().execute(url + </span><span class="s4">&quot;horario/horario/&quot; </span><span class="s1">+ turma + </span><span class="s4">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        }</span><span class="s0">else</span><span class="s1">{ 
+            Intent intent = getIntent()</span><span class="s0">;</span><span class="s1"> 
+            String turmaSelecionada = intent.getStringExtra(</span><span class="s4">&quot;turma&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s4">&quot;TURMA2&quot;</span><span class="s0">, </span><span class="s1">turmaSelecionada)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo1 = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            String matricula = repo1.getMatricula()</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s4">&quot;MATRICULA!!&quot;</span><span class="s0">, </span><span class="s1">matricula +</span><span class="s4">&quot;p&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            horario.setTurma(turmaSelecionada)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">getHorario().execute(url+</span><span class="s4">&quot;horario/horario/&quot;</span><span class="s1">+turmaSelecionada+</span><span class="s4">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">GetTurmas().execute(url+ </span><span class="s4">&quot;horario/disciplina/&quot; </span><span class="s1">+ turmaSelecionada +</span><span class="s4">&quot;/&quot;</span><span class="s1">+ matricula)</span><span class="s0">;</span><span class="s1"> 
+        } 
+        buttons[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button2)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button3)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button4)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button5)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">1</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button6)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">1</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button7)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">1</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button8)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">1</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button9)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">1</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button10)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">2</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button11)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">2</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button12)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">2</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button13)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">2</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button14)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">2</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button15)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">3</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button16)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">3</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button17)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">3</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button18)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">3</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button19)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">3</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button20)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">4</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button21)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">4</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button22)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">4</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button23)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">4</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button24)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">4</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button25)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">5</span><span class="s1">][</span><span class="s2">0</span><span class="s1">] = (Button) findViewById(R.id.button26)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">5</span><span class="s1">][</span><span class="s2">1</span><span class="s1">] = (Button) findViewById(R.id.button27)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">5</span><span class="s1">][</span><span class="s2">2</span><span class="s1">] = (Button) findViewById(R.id.button28)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">5</span><span class="s1">][</span><span class="s2">3</span><span class="s1">] = (Button) findViewById(R.id.button29)</span><span class="s0">;</span><span class="s1"> 
+        buttons[</span><span class="s2">5</span><span class="s1">][</span><span class="s2">4</span><span class="s1">] = (Button) findViewById(R.id.button30)</span><span class="s0">;</span><span class="s1"> 
+        materia = </span><span class="s4">&quot;PEOO&quot;</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s0">;</span><span class="s1">i&lt;</span><span class="s2">6</span><span class="s0">;</span><span class="s1">i++){ 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">t=</span><span class="s2">0</span><span class="s0">;</span><span class="s1">t&lt;</span><span class="s2">5</span><span class="s0">;</span><span class="s1">t++){ 
+                </span><span class="s0">try </span><span class="s1">{ 
+ 
+                    buttons[i][t].setText(horarioManha[i][t])</span><span class="s0">;</span><span class="s1"> 
+                }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                } 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s0">int </span><span class="s1">posXA = -</span><span class="s2">1</span><span class="s0">; </span><span class="s3">// o x representa o horario do professor</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">posYA = -</span><span class="s2">1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">posXB = -</span><span class="s2">1</span><span class="s0">; </span><span class="s3">// o y representa o horario a ser trocado</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">posYB = -</span><span class="s2">1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">clickMudar(</span><span class="s0">int </span><span class="s1">x</span><span class="s0">, int </span><span class="s1">y){ 
+        contClicks++</span><span class="s0">; </span><span class="s3">// ímpar o horário é dele</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(contClicks%</span><span class="s2">2</span><span class="s1">==</span><span class="s2">0</span><span class="s1">) { 
+            </span><span class="s0">if </span><span class="s1">(buttons[x][y].getText().toString().equals(materia)) { 
+                Toast.makeText(ActivityHorarioVisualizar.</span><span class="s0">this, </span><span class="s4">&quot;Este horario já é seu&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+                contClicks--</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                posXB = x</span><span class="s0">;</span><span class="s1"> 
+                posYB = y</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) { 
+                    buttons[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.horario1))</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+            } 
+        }</span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">if </span><span class="s1">(buttons[x][y].getText().toString().equals(materia)) { 
+                posXA = x</span><span class="s0">;</span><span class="s1"> 
+                posYA = y</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) 
+                    buttons[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.horario2))</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s3">//Coloca o aviso pra trocar</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                contClicks--</span><span class="s0">;</span><span class="s1"> 
+                Toast.makeText(ActivityHorarioVisualizar.</span><span class="s0">this, </span><span class="s4">&quot;Selecione um horário seu.&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+    </span><span class="s0">int </span><span class="s1">contClicks = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">Mudar (View view) { 
+        clickMudar(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar1 (View view) { 
+        clickMudar(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar2 (View view) { 
+        clickMudar(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar3 (View view) { 
+        clickMudar(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar4 (View view) { 
+        clickMudar(</span><span class="s2">0</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar5 (View view) { 
+        clickMudar(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar6 (View view) { 
+        clickMudar(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar7 (View view) { 
+        clickMudar(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar8 (View view) { 
+        clickMudar(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar9 (View view) { 
+        clickMudar(</span><span class="s2">1</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar10 (View view) { 
+        clickMudar(</span><span class="s2">2</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar11 (View view) { 
+        clickMudar(</span><span class="s2">2</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar12 (View view) { 
+        clickMudar(</span><span class="s2">2</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar13 (View view) { 
+        clickMudar(</span><span class="s2">2</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar14 (View view) { 
+        clickMudar(</span><span class="s2">2</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar15 (View view) { 
+        clickMudar(</span><span class="s2">3</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar16 (View view) { 
+        clickMudar(</span><span class="s2">3</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar17 (View view) { 
+        clickMudar(</span><span class="s2">3</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar18 (View view) { 
+        clickMudar(</span><span class="s2">3</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar19 (View view) { 
+        clickMudar(</span><span class="s2">3</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar20 (View view) { 
+        clickMudar(</span><span class="s2">4</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar21 (View view) { 
+        clickMudar(</span><span class="s2">4</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar22 (View view) { 
+        clickMudar(</span><span class="s2">4</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar23 (View view) { 
+        clickMudar(</span><span class="s2">4</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar24 (View view) { 
+ 
+        clickMudar(</span><span class="s2">4</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar25 (View view) { 
+        clickMudar(</span><span class="s2">5</span><span class="s0">,</span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar26 (View view) { 
+        clickMudar(</span><span class="s2">5</span><span class="s0">,</span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar27 (View view) { 
+        clickMudar(</span><span class="s2">5</span><span class="s0">,</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar28 (View view) { 
+        clickMudar(</span><span class="s2">5</span><span class="s0">,</span><span class="s2">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">Mudar29 (View view) { 
+        clickMudar(</span><span class="s2">5</span><span class="s0">,</span><span class="s2">4</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">TrocarDeHorario(View view) { 
+        </span><span class="s0">if</span><span class="s1">(posXA != -</span><span class="s2">1 </span><span class="s1">&amp;&amp; posXB != -</span><span class="s2">1</span><span class="s1">) { 
+            AlertDialog.Builder builder = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            builder.setTitle(</span><span class="s4">&quot;Troca&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            builder.setMessage(</span><span class="s4">&quot;Deseja realmente efetuar a troca de seu horario com &quot; </span><span class="s1">+ horarioManha[posXB][posYB] + </span><span class="s4">&quot;?&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            builder.setPositiveButton(</span><span class="s4">&quot;Sim&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialogInterface</span><span class="s0">, int </span><span class="s1">i) { 
+                    String a = horarioManha[posXA][posYA]</span><span class="s0">;</span><span class="s1"> 
+                    String b = horarioManha[posXB][posYB]</span><span class="s0">;</span><span class="s1"> 
+                    horarioManha[posXB][posYB] = a</span><span class="s0">;</span><span class="s1"> 
+                    horarioManha[posXA][posYA] = b</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                    NotificationManager nM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE)</span><span class="s0">;</span><span class="s1"> 
+                    PendingIntent p = PendingIntent.getActivity(getApplicationContext()</span><span class="s0">, </span><span class="s2">0</span><span class="s0">, new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityHorarioVisualizar.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">, </span><span class="s2">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    Grade g = </span><span class="s0">new </span><span class="s1">Grade()</span><span class="s0">;</span><span class="s1"> 
+                    g.setHorarioManha(horarioManha)</span><span class="s0">;</span><span class="s1"> 
+                    horario.setGrade(g)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">new </span><span class="s1">AlterarHorario().execute(horario)</span><span class="s0">;</span><span class="s1"> 
+                    NotificationCompat.Builder builder1 = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(getApplicationContext())</span><span class="s0">;</span><span class="s1"> 
+                    builder1.setTicker(</span><span class="s4">&quot;Meu campus&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    builder1.setContentTitle(</span><span class="s4">&quot;Meu campus&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    builder1.setContentText(</span><span class="s4">&quot;Troca do horario de &quot; </span><span class="s1">+ materiaA + </span><span class="s4">&quot; por &quot; </span><span class="s1">+ materia)</span><span class="s0">;</span><span class="s1"> 
+                    builder1.setSmallIcon(R.mipmap.ic_launcher)</span><span class="s0">;</span><span class="s1"> 
+                    builder1.setContentIntent(p)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    Notification n = builder1.build()</span><span class="s0">;</span><span class="s1"> 
+                    n.flags = Notification.FLAG_AUTO_CANCEL</span><span class="s0">;</span><span class="s1"> 
+                    nM.notify(R.mipmap.ic_launcher</span><span class="s0">, </span><span class="s1">n)</span><span class="s0">;</span><span class="s1"> 
+ 
+                    </span><span class="s0">try </span><span class="s1">{ 
+                        Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)</span><span class="s0">;</span><span class="s1"> 
+                        Ringtone toque = RingtoneManager.getRingtone(getApplicationContext()</span><span class="s0">, </span><span class="s1">som)</span><span class="s0">;</span><span class="s1"> 
+                        toque.play()</span><span class="s0">;</span><span class="s1"> 
+                    } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+ 
+                    } 
+                    finish()</span><span class="s0">;</span><span class="s1"> 
+                    Toast.makeText(ActivityHorarioVisualizar.</span><span class="s0">this ,</span><span class="s4">&quot;Operação concluída&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+                } 
+            })</span><span class="s0">;</span><span class="s1"> 
+            builder.setNegativeButton(</span><span class="s4">&quot;Não&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialogInterface</span><span class="s0">, int </span><span class="s1">i) { 
+                    recreate()</span><span class="s0">;</span><span class="s1"> 
+ 
+                } 
+            })</span><span class="s0">;</span><span class="s1"> 
+            builder.show()</span><span class="s0">;</span><span class="s1"> 
+        }</span><span class="s0">else</span><span class="s1">{ 
+            Toast.makeText(ActivityHorarioVisualizar.</span><span class="s0">this ,</span><span class="s4">&quot;Horario vazio&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+ 
+    } 
+    </span><span class="s0">private class </span><span class="s1">getHorario </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String[][]&gt;{ 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String[][] doInBackground(String... strings) { 
+ 
+                Log.e(</span><span class="s4">&quot;BACKGROUND&quot;</span><span class="s0">, </span><span class="s4">&quot;INCICIO&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s2">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s4">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Gson gson = </span><span class="s0">new </span><span class="s1">Gson()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s4">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">data.toString() + </span><span class="s4">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                horarioManha = gson.fromJson(data.toString()</span><span class="s0">, </span><span class="s1">Grade.</span><span class="s0">class</span><span class="s1">).getHorarioManha()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+            } 
+            </span><span class="s0">return </span><span class="s1">horarioManha</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String[][] strings) { 
+            Log.e(</span><span class="s4">&quot;NA POS 0 0 &quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">0</span><span class="s1">]+</span><span class="s4">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetTurmas </span><span class="s0">extends  </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s2">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s4">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Gson gson = </span><span class="s0">new </span><span class="s1">Gson()</span><span class="s0">;</span><span class="s1"> 
+                JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(data.toString())</span><span class="s0">;</span><span class="s1"> 
+                disciplinas = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s0">; </span><span class="s1">i&lt;jsonArray.length()</span><span class="s0">; </span><span class="s1">i++){ 
+                    JSONObject jsonObject = jsonArray.getJSONObject(i)</span><span class="s0">;</span><span class="s1"> 
+                    Disciplina disciplina = gson.fromJson(jsonObject.toString()</span><span class="s0">, </span><span class="s1">Disciplina.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    disciplinas.add(disciplina)</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s4">&quot;DATA TURMAS&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">AlterarHorario </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;Horario</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(Horario... horarios) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url+</span><span class="s4">&quot;horario/alterar&quot;</span><span class="s1">).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s4">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s4">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s4">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s4">&quot;Accept&quot;</span><span class="s0">, </span><span class="s4">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Gson gson = </span><span class="s0">new </span><span class="s1">Gson()</span><span class="s0">;</span><span class="s1"> 
+                JSONObject jsonObject = </span><span class="s0">new </span><span class="s1">JSONObject(</span><span class="s0">new </span><span class="s1">Gson().toJson(horarios))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s4">&quot;JSONNN&quot;</span><span class="s0">, </span><span class="s1">jsonObject.toString())</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(jsonObject))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+ 
+            } 
+            </span><span class="s0">return null;</span><span class="s1"> 
+        } 
+    } 
+} 
+ 
+</span></pre>
+</body>
+</html>

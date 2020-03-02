@@ -1,0 +1,228 @@
+<html>
+<head>
+<title>EventoCadastro.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+EventoCadastro.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.app.DatePickerDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.Dialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.DialogFragment</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.DatePicker</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStreamWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Calendar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Date</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">EventoCadastro </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    EditText edtTitulo</span><span class="s0">;</span><span class="s1"> 
+    EditText edtDescricao</span><span class="s0">;</span><span class="s1"> 
+    EditText edtImagem</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">EditText edtInicio</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">EditText edtFim</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">EditText edtPub</span><span class="s0">;</span><span class="s1"> 
+    Button btnCadastro</span><span class="s0">;</span><span class="s1"> 
+    String url1</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        url1 = getResources().getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_evento_cadastro)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar = (Toolbar) findViewById(R.id.tb_notica_add1)</span><span class="s0">;</span><span class="s1"> 
+        edtTitulo = (EditText) findViewById(R.id.edtTitulo1)</span><span class="s0">;</span><span class="s1"> 
+        edtDescricao = (EditText) findViewById(R.id.edtDescricao1)</span><span class="s0">;</span><span class="s1"> 
+        edtImagem = (EditText) findViewById(R.id.edtImagem1)</span><span class="s0">;</span><span class="s1"> 
+        edtInicio = (EditText) findViewById(R.id.edtInicio)</span><span class="s0">;</span><span class="s1"> 
+        edtPub = (EditText) findViewById(R.id.dataPub)</span><span class="s0">;</span><span class="s1"> 
+        edtPub.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                </span><span class="s0">new </span><span class="s1">DatePickerFragment2(</span><span class="s2">&quot;pub&quot;</span><span class="s1">).show(getSupportFragmentManager()</span><span class="s0">, </span><span class="s2">&quot;Data&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        edtInicio.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                </span><span class="s0">new </span><span class="s1">DatePickerFragment2(</span><span class="s2">&quot;inicio&quot;</span><span class="s1">).show(getSupportFragmentManager()</span><span class="s0">, </span><span class="s2">&quot;Data&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        edtFim = (EditText) findViewById(R.id.edtTermino)</span><span class="s0">;</span><span class="s1"> 
+        edtFim.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                </span><span class="s0">new </span><span class="s1">DatePickerFragment2(</span><span class="s2">&quot;else&quot;</span><span class="s1">).show(getSupportFragmentManager()</span><span class="s0">, </span><span class="s2">&quot;Data&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        btnCadastro = (Button) findViewById(R.id.btnCadastro1)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitle(</span><span class="s2">&quot;Cadastro de eventos&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+ 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+ 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        btnCadastro.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                </span><span class="s0">if</span><span class="s1">(!edtTitulo.getText().toString().isEmpty() &amp;&amp; !edtDescricao.getText().toString().isEmpty()) { 
+                    Evento e = </span><span class="s0">new </span><span class="s1">Evento()</span><span class="s0">;</span><span class="s1"> 
+                    e.setTitulo(edtTitulo.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    e.setDescricao(edtDescricao.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataInicio(edtInicio.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataFim(edtFim.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataPublicacao(edtPub.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    e.setImageLink(edtImagem.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">try </span><span class="s1">{ 
+                        JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject(</span><span class="s0">new </span><span class="s1">Gson().toJson(e))</span><span class="s0">;</span><span class="s1"> 
+                        String jsons = json.toString()</span><span class="s0">;</span><span class="s1"> 
+                        Log.e(</span><span class="s2">&quot;JSONST&quot;</span><span class="s0">, </span><span class="s1">json.toString())</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">new </span><span class="s1">PostAsynk().execute(url1+</span><span class="s2">&quot;evento/criar&quot;</span><span class="s0">, </span><span class="s1">jsons)</span><span class="s0">;</span><span class="s1"> 
+                    }</span><span class="s0">catch</span><span class="s1">(Exception exception){ 
+                        Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s2">&quot;Erro inesperado&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+                    } 
+ 
+                    Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s2">&quot;Evento cadastrado com sucesso!&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+                    edtTitulo.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    edtDescricao.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    edtImagem.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    edtPub.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    edtInicio.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    edtFim.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                }</span><span class="s0">else</span><span class="s1"> 
+                    Toast.makeText(getApplication()</span><span class="s0">, </span><span class="s2">&quot;Os campos de título e descrição são obrigatórios.&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">PostAsynk </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt; { 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            Log.e(</span><span class="s2">&quot;DOINBA&quot;</span><span class="s0">, </span><span class="s2">&quot;FASDFSADFASFAFSDFF&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s3">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s3">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;asdf&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                Log.e(</span><span class="s2">&quot;RESPONSE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseMessage() )</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">// br = new BufferedReader(new InputStreamReader(connection.getInputStream()));</span><span class="s1"> 
+                </span><span class="s4">//data.append(br.readLine());</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                </span><span class="s4">//Toast.makeText(getApplicationContext(), &quot;Erro&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;EXCP&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+ 
+ 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;EXECUTE&quot;</span><span class="s0">, </span><span class="s1">s.toString()+</span><span class="s2">&quot;TETE&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    </span><span class="s0">public static class </span><span class="s1">DatePickerFragment2 </span><span class="s0">extends </span><span class="s1">DialogFragment 
+            </span><span class="s0">implements </span><span class="s1">DatePickerDialog.OnDateSetListener { 
+        </span><span class="s0">public </span><span class="s1">DatePickerFragment2(){ 
+ 
+        } 
+        String edt</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">public </span><span class="s1">DatePickerFragment2(String s){ 
+            edt = s</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">public </span><span class="s1">Dialog onCreateDialog(Bundle savedInstanceState) { 
+            </span><span class="s4">// Use the current date as the default date in the picker</span><span class="s1"> 
+            </span><span class="s0">final </span><span class="s1">Calendar c = Calendar.getInstance()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">int </span><span class="s1">year = c.get(Calendar.YEAR)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">int </span><span class="s1">month = c.get(Calendar.MONTH)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">int </span><span class="s1">day = c.get(Calendar.DAY_OF_MONTH)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s4">// Create a new instance of DatePickerDialog and return it</span><span class="s1"> 
+            </span><span class="s0">return new </span><span class="s1">DatePickerDialog(getActivity()</span><span class="s0">, this, </span><span class="s1">year</span><span class="s0">, </span><span class="s1">month</span><span class="s0">, </span><span class="s1">day)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">public void </span><span class="s1">onDateSet(DatePicker view</span><span class="s0">, int </span><span class="s1">year</span><span class="s0">, int </span><span class="s1">month</span><span class="s0">, int </span><span class="s1">day) { 
+            </span><span class="s4">// Do something with the date chosen by the user</span><span class="s1"> 
+            month++</span><span class="s0">;</span><span class="s1"> 
+ 
+            String data = day+</span><span class="s2">&quot;/&quot;</span><span class="s1">+month+</span><span class="s2">&quot;/&quot;</span><span class="s1">+year</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(month &lt;</span><span class="s3">10</span><span class="s1">){ 
+                data = day+</span><span class="s2">&quot;/&quot;</span><span class="s1">+</span><span class="s2">&quot;0&quot;</span><span class="s1">+month+</span><span class="s2">&quot;/&quot;</span><span class="s1">+year</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+            </span><span class="s0">if</span><span class="s1">(edt.equals(</span><span class="s2">&quot;inicio&quot;</span><span class="s1">)){ 
+                edtInicio.setText(data)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                </span><span class="s0">if</span><span class="s1">(edt.equals(</span><span class="s2">&quot;pub&quot;</span><span class="s1">)) 
+                    edtPub.setText(data)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">else</span><span class="s1"> 
+                    edtFim.setText(data)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>

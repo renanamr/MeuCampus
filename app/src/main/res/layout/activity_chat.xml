@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context="com.meucampus.arthur.testez.ChatActivity"
+    android:id="@+id/rel">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_chat"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView50"
+        android:layout_below="@+id/tb_chat"
+        android:dividerHeight="0dp"
+        android:divider="#fff"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:layout_above="@+id/chat_tb_bottom" />
+
+
+    <!--<LinearLayout
+        android:id="@+id/llout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:gravity="bottom">-->
+        <!--<EditText
+            android:layout_alignParentBottom="true"
+            android:id="@+id/txt_inputText"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:hint="Mensagem"
+            android:layout_weight="0.8"
+            />
+        <Button
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btn_Send"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Send"
+            />
+    </LinearLayout>-->
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+
+        android:id="@+id/chat_tb_bottom"
+        layout="@layout/toolbar_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </include>
+
+</RelativeLayout>

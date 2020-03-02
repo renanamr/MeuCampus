@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>ActivityTurmas.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(128,128,128); }
+.s4 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ActivityTurmas.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">ActivityTurmas </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    String periodo</span><span class="s0">;</span><span class="s1"> 
+    Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    List&lt;String&gt; objetosJson = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+    TurmasAdapter adapter</span><span class="s0">;</span><span class="s1"> 
+    ListView mList</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_turmas)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar = (Toolbar) findViewById(R.id.tb_turmas1)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitle(</span><span class="s2">&quot;Turmas virtuais&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimarytext))</span><span class="s0">;</span><span class="s1"> 
+ 
+        mList = (ListView) findViewById(R.id.listTurmas)</span><span class="s0">;</span><span class="s1"> 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">new </span><span class="s1">GetPeriodoLetivo().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-periodos-letivos/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        getSupportActionBar().setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        mToolbar.setNavigationOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s3">//TESTAR URL PERIODO</span><span class="s1"> 
+        </span><span class="s3">//new GetTurmas().execute(&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/boletim/2016/1&quot;);</span><span class="s1"> 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetPeriodoLetivo </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String urlSuap</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+</span><span class="s3">//                url = strings[1];</span><span class="s1"> 
+                urlSuap = strings[</span><span class="s4">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s3">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;basicAuth: &quot;</span><span class="s0">, new </span><span class="s1">RepositorioUsuario().getToken())</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(urlSuap).openConnection()</span><span class="s0">;</span><span class="s1"> 
+ 
+                connection.setRequestProperty(</span><span class="s2">&quot;Authorization&quot;</span><span class="s0">, </span><span class="s2">&quot;JWT &quot;</span><span class="s1">+</span><span class="s0">new </span><span class="s1">RepositorioUsuario().getToken())</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setUseCaches(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;CODE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+                periodo = jsonArray.getJSONObject(jsonArray.length()-</span><span class="s4">1</span><span class="s1">).getString(</span><span class="s2">&quot;ano_letivo&quot;</span><span class="s1">)+</span><span class="s2">&quot;/&quot;</span><span class="s1">+jsonArray.getJSONObject(jsonArray.length()-</span><span class="s4">1</span><span class="s1">).getString(</span><span class="s2">&quot;periodo_letivo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;PERIDO: &quot;</span><span class="s0">, </span><span class="s1">periodo+</span><span class="s2">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">GetTurmas().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/boletim/&quot;</span><span class="s1">+periodo)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">GetTurmas </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt; { 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String urlSuap</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+ 
+            </span><span class="s0">try</span><span class="s1">{ 
+ 
+                urlSuap = strings[</span><span class="s4">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s3">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;basicAuth: &quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s4">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(urlSuap).openConnection()</span><span class="s0">;</span><span class="s1"> 
+ 
+                connection.setRequestProperty(</span><span class="s2">&quot;Authorization&quot;</span><span class="s0">, </span><span class="s2">&quot;JWT &quot;</span><span class="s1">+</span><span class="s0">new </span><span class="s1">RepositorioUsuario().getToken())</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setUseCaches(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;CODE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;DATA POST&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+ 
+            JSONArray json</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                json = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s0">; </span><span class="s1">i&lt;json.length()</span><span class="s0">; </span><span class="s1">i++){ 
+                    objetosJson.add(json.getJSONObject(i).toString())</span><span class="s0">;</span><span class="s1"> 
+                } 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            adapter = </span><span class="s0">new </span><span class="s1">TurmasAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">objetosJson</span><span class="s0">, </span><span class="s2">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            mList.setAdapter(adapter)</span><span class="s0">;</span><span class="s1"> 
+            mList.setDividerHeight(</span><span class="s4">10</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            mList.setOnItemClickListener(</span><span class="s0">new </span><span class="s1">AdapterView.OnItemClickListener() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onItemClick(AdapterView&lt;?&gt; adapterView</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, long </span><span class="s1">l) { 
+                    String codigoDiario =</span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">try </span><span class="s1">{ 
+                        JSONObject jsonObject = </span><span class="s0">new </span><span class="s1">JSONObject(objetosJson.get(i))</span><span class="s0">;</span><span class="s1"> 
+                        codigoDiario = jsonObject.getString(</span><span class="s2">&quot;codigo_diario&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        Log.e(</span><span class="s2">&quot;CODIGO&quot;</span><span class="s0">, </span><span class="s1">codigoDiario)</span><span class="s0">;</span><span class="s1"> 
+                    }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                        e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    Bundle a = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                    a.putString(</span><span class="s2">&quot;codigo&quot;</span><span class="s0">, </span><span class="s1">codigoDiario)</span><span class="s0">;</span><span class="s1"> 
+                    Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityTurmasDetalhes.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    intent.putExtras(a)</span><span class="s0">;</span><span class="s1"> 
+                    startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                } 
+            })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+ 
+        } 
+ 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

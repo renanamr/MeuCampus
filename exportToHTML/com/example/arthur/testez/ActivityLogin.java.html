@@ -1,0 +1,1051 @@
+<html>
+<head>
+<title>ActivityLogin.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(98,151,85); font-style: italic; }
+.s4 { color: rgb(128,128,128); }
+.s5 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ActivityLogin.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.Bitmap</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AlertDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Base64</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ProgressBar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.google.android.gms.appindexing.Action</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.google.android.gms.appindexing.AppIndex</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.google.android.gms.common.api.GoogleApiClient</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.google.gson.Gson</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.OutputStreamWriter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.Authenticator</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.PasswordAuthentication</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">ActivityLogin </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+    EditText matriculaTxt</span><span class="s0">;</span><span class="s1"> 
+    EditText senhaTxt</span><span class="s0">;</span><span class="s1"> 
+    Button btnEntrar</span><span class="s0">;</span><span class="s1"> 
+    TextView aviso</span><span class="s0">;</span><span class="s1"> 
+    Button btn</span><span class="s0">;</span><span class="s1"> 
+    String url1 = </span><span class="s0">new </span><span class="s1">String()</span><span class="s0">;</span><span class="s1"> 
+     String token = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+    String matri =</span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+    String sen = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">ProgressBar progressBar</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">static </span><span class="s1">Usuario usuarioGlobal</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s3">/** 
+     * ATTENTION: This was auto-generated to implement the App Indexing API. 
+     * See https://g.co/AppIndexing/AndroidStudio for more information. 
+     */</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">GoogleApiClient client</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+ 
+    </span><span class="s0">static </span><span class="s1">Context context</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_login)</span><span class="s0">;</span><span class="s1"> 
+        context = </span><span class="s0">this;</span><span class="s1"> 
+        url1 = getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        usuarioGlobal = </span><span class="s0">null;</span><span class="s1"> 
+        matriculaTxt = (EditText) findViewById(R.id.matriculaEdt)</span><span class="s0">;</span><span class="s1"> 
+        senhaTxt = (EditText) findViewById(R.id.senhaEdt)</span><span class="s0">;</span><span class="s1"> 
+        matriculaTxt.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        senhaTxt.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        btnEntrar = (Button) findViewById(R.id.entrar)</span><span class="s0">;</span><span class="s1"> 
+        aviso = (TextView) findViewById(R.id.aviso)</span><span class="s0">;</span><span class="s1"> 
+        progressBar = (ProgressBar) findViewById(R.id.progressLogin)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">boolean </span><span class="s1">logado = sharedPreferences.getBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(logado){ 
+ 
+ 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            repo.setMatricula(sharedPreferences.getString(</span><span class="s2">&quot;matricula&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">GetPermissoes().execute(url1+</span><span class="s2">&quot;usuario/GetUsuario/&quot;</span><span class="s1">+repo.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//editor.putString(&quot;matricula&quot;, usuarioGlobal.getMatricula());</span><span class="s1"> 
+            repo.setSenha(sharedPreferences.getString(</span><span class="s2">&quot;senha&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//editor.putString(&quot;senha&quot;, usuarioGlobal.getSenha());</span><span class="s1"> 
+            repo.setId(sharedPreferences.getInt(</span><span class="s2">&quot;id&quot;</span><span class="s0">, </span><span class="s5">0</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//editor.putInt(&quot;id&quot;, usuarioGlobal.getId());</span><span class="s1"> 
+            </span><span class="s4">//editor.putString(&quot;tipo&quot;, usuarioGlobal.getTipo());</span><span class="s1"> 
+            String teste = sharedPreferences.getString(</span><span class="s2">&quot;permissoes&quot;</span><span class="s0">, </span><span class="s2">&quot;0&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            repo.setPermissoes(sharedPreferences.getString(</span><span class="s2">&quot;permissoes&quot;</span><span class="s0">, </span><span class="s2">&quot;0&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            repo.setNome(sharedPreferences.getString(</span><span class="s2">&quot;nome&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s4">//editor.putBoolean(&quot;logado&quot;, true);</span><span class="s1"> 
+            repo.setTipo(sharedPreferences.getString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            repo.setCurso(sharedPreferences.getString(</span><span class="s2">&quot;curso&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            repo.setFoto(sharedPreferences.getString(</span><span class="s2">&quot;url&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">if </span><span class="s1">(repo.getTipo().equals(</span><span class="s2">&quot;ALUNO&quot;</span><span class="s1">)) { 
+                String[] turma  = </span><span class="s0">new </span><span class="s1">String[</span><span class="s5">1</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                turma[</span><span class="s5">0</span><span class="s1">] = sharedPreferences.getString(</span><span class="s2">&quot;turma&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                repo.setTurma(turma)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    Usuario a = </span><span class="s0">new </span><span class="s1">Usuario()</span><span class="s0">;</span><span class="s1"> 
+                    a.setMatricula(repo.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//a.setSenha(repo.getSenha());</span><span class="s1"> 
+                    JSONObject jsonObject = </span><span class="s0">new </span><span class="s1">JSONObject(</span><span class="s0">new </span><span class="s1">Gson().toJson(a))</span><span class="s0">;</span><span class="s1"> 
+                    String json = jsonObject.toString()</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">/*GetTurmas get = new GetTurmas(); 
+                    get.execute(url1 + &quot;usuario/login&quot;, json); 
+                    String[] turmas; 
+                    turmas = get.getTurmas(); 
+ 
+                    repo.setTurma(turmas);*/</span><span class="s1"> 
+ 
+                }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                    e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+                } 
+            } 
+            Log.e(</span><span class="s2">&quot;TIPO&quot;</span><span class="s0">, </span><span class="s1">repo.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//editor.putString(&quot;tipo&quot;, usuarioGlobal.getTipo());</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">DownloadImageTask().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/&quot;</span><span class="s1">+repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            String json = </span><span class="s2">&quot;{</span><span class="s0">\&quot;</span><span class="s2">username</span><span class="s0">\&quot;</span><span class="s2">:</span><span class="s0">\&quot;</span><span class="s2">&quot;</span><span class="s1">+repo.getMatricula()+</span><span class="s2">&quot;</span><span class="s0">\&quot;</span><span class="s2">,</span><span class="s0">\&quot;</span><span class="s2">password</span><span class="s0">\&quot;</span><span class="s2">:</span><span class="s0">\&quot;</span><span class="s2">&quot;</span><span class="s1">+repo.getSenha()+</span><span class="s2">&quot;</span><span class="s0">\&quot;</span><span class="s2">}&quot;</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;JSONNNN&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//if (!matricula.equals(&quot;&quot;) &amp;&amp; !senha.equals(&quot;&quot;)) {</span><span class="s1"> 
+            </span><span class="s4">//AutenticaAsynk autenticaAsynk = new AutenticaAsynk();</span><span class="s1"> 
+            progressBar.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">AutenticaP().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/autenticacao/token/&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+ 
+            String re = repo.getFoto()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">/*Intent intent = new Intent(getApplicationContext(), MainActivity.class); 
+ 
+            startActivity(intent);*/</span><span class="s1"> 
+            matriculaTxt.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            senhaTxt.setText(</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s4">// ATTENTION: This was auto-generated to implement the App Indexing API.</span><span class="s1"> 
+        </span><span class="s4">// See https://g.co/AppIndexing/AndroidStudio for more information.</span><span class="s1"> 
+        client = </span><span class="s0">new </span><span class="s1">GoogleApiClient.Builder(</span><span class="s0">this</span><span class="s1">).addApi(AppIndex.API).build()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">clickEntrar(View view) { 
+        </span><span class="s4">//ALTERE AQUI</span><span class="s1"> 
+        RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+        repo.setMatricula(</span><span class="s2">&quot;1234&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        repo.setNome(</span><span class="s2">&quot;Márcio&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        repo.setCurso(</span><span class="s2">&quot;COADES/NC&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        repo.setTipo(</span><span class="s2">&quot;COADES/NC&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//ATÉ AQUI</span><span class="s1"> 
+        Log.e(</span><span class="s2">&quot;CLICK&quot;</span><span class="s0">,</span><span class="s2">&quot;clicou&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        String matricula = matriculaTxt.getText() + </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        matri = matricula</span><span class="s0">;</span><span class="s1"> 
+ 
+        String senha = senhaTxt.getText() + </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        sen = senha</span><span class="s0">;</span><span class="s1"> 
+ 
+            String json = </span><span class="s2">&quot;{</span><span class="s0">\&quot;</span><span class="s2">username</span><span class="s0">\&quot;</span><span class="s2">:</span><span class="s0">\&quot;</span><span class="s2">&quot;</span><span class="s1">+matricula+</span><span class="s2">&quot;</span><span class="s0">\&quot;</span><span class="s2">,</span><span class="s0">\&quot;</span><span class="s2">password</span><span class="s0">\&quot;</span><span class="s2">:</span><span class="s0">\&quot;</span><span class="s2">&quot;</span><span class="s1">+senha+</span><span class="s2">&quot;</span><span class="s0">\&quot;</span><span class="s2">}&quot;</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;JSONNNN&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//if (!matricula.equals(&quot;&quot;) &amp;&amp; !senha.equals(&quot;&quot;)) {</span><span class="s1"> 
+                </span><span class="s4">//AutenticaAsynk autenticaAsynk = new AutenticaAsynk();</span><span class="s1"> 
+                progressBar.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">Autentica2().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/autenticacao/token/&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+        </span><span class="s4">//    }</span><span class="s1"> 
+           </span><span class="s4">// else</span><span class="s1"> 
+</span><span class="s4">//                Toast.makeText(getApplicationContext(), &quot;Insira todos os campos&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+ 
+ 
+ 
+    } 
+ 
+    </span><span class="s0">public boolean </span><span class="s1">verificacao(String matricula</span><span class="s0">, </span><span class="s1">String senha) { 
+        </span><span class="s0">try </span><span class="s1">{ 
+            JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(readRawTextFile())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i =</span><span class="s5">0</span><span class="s0">;</span><span class="s1">jsonArray.getJSONObject(i)!=</span><span class="s0">null;</span><span class="s1">i++) { 
+                </span><span class="s0">if </span><span class="s1">(matricula.equals(jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;matricula&quot;</span><span class="s1">)) &amp;&amp; senha.equals(jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;senha&quot;</span><span class="s1">))) { 
+                    </span><span class="s0">return true;</span><span class="s1"> 
+                } 
+ 
+            } 
+         </span><span class="s0">return false;</span><span class="s1"> 
+        }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+            </span><span class="s0">return false;</span><span class="s1"> 
+        } 
+ 
+ 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String readRawTextFile() { 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+ 
+            InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.usuarios)</span><span class="s0">;</span><span class="s1"> 
+ 
+            InputStreamReader inputreader = </span><span class="s0">new </span><span class="s1">InputStreamReader(inputStream)</span><span class="s0">;</span><span class="s1"> 
+ 
+            BufferedReader buffreader = </span><span class="s0">new </span><span class="s1">BufferedReader(inputreader)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">return </span><span class="s1">buffreader.readLine()</span><span class="s0">;</span><span class="s1"> 
+ 
+        } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+ 
+            </span><span class="s0">return null;</span><span class="s1"> 
+ 
+        } 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onStart() { 
+        </span><span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">// ATTENTION: This was auto-generated to implement the App Indexing API.</span><span class="s1"> 
+        </span><span class="s4">// See https://g.co/AppIndexing/AndroidStudio for more information.</span><span class="s1"> 
+        client.connect()</span><span class="s0">;</span><span class="s1"> 
+        Action viewAction = Action.newAction( 
+                Action.TYPE_VIEW</span><span class="s0">, </span><span class="s4">// TODO: choose an action type.</span><span class="s1"> 
+                </span><span class="s2">&quot;ActivityLogin Page&quot;</span><span class="s0">, </span><span class="s4">// TODO: Define a title for the content shown.</span><span class="s1"> 
+                </span><span class="s4">// TODO: If you have web page content that matches this app activity's content,</span><span class="s1"> 
+                </span><span class="s4">// make sure this auto-generated web page URL is correct.</span><span class="s1"> 
+                </span><span class="s4">// Otherwise, set the URL to null.</span><span class="s1"> 
+                Uri.parse(</span><span class="s2">&quot;http://host/path&quot;</span><span class="s1">)</span><span class="s0">,</span><span class="s1"> 
+                </span><span class="s4">// TODO: Make sure this auto-generated app URL is correct.</span><span class="s1"> 
+                Uri.parse(</span><span class="s2">&quot;android-app://com.meucampus.arthur.testez/http/host/path&quot;</span><span class="s1">)
+        )</span><span class="s0">;</span><span class="s1"> 
+        AppIndex.AppIndexApi.start(client</span><span class="s0">, </span><span class="s1">viewAction)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onStop() { 
+        </span><span class="s0">super</span><span class="s1">.onStop()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">// ATTENTION: This was auto-generated to implement the App Indexing API.</span><span class="s1"> 
+        </span><span class="s4">// See https://g.co/AppIndexing/AndroidStudio for more information.</span><span class="s1"> 
+        Action viewAction = Action.newAction( 
+                Action.TYPE_VIEW</span><span class="s0">, </span><span class="s4">// TODO: choose an action type.</span><span class="s1"> 
+                </span><span class="s2">&quot;ActivityLogin Page&quot;</span><span class="s0">, </span><span class="s4">// TODO: Define a title for the content shown.</span><span class="s1"> 
+                </span><span class="s4">// TODO: If you have web page content that matches this app activity's content,</span><span class="s1"> 
+                </span><span class="s4">// make sure this auto-generated web page URL is correct.</span><span class="s1"> 
+                </span><span class="s4">// Otherwise, set the URL to null.</span><span class="s1"> 
+                Uri.parse(</span><span class="s2">&quot;http://host/path&quot;</span><span class="s1">)</span><span class="s0">,</span><span class="s1"> 
+                </span><span class="s4">// TODO: Make sure this auto-generated app URL is correct.</span><span class="s1"> 
+                Uri.parse(</span><span class="s2">&quot;android-app://com.meucampus.arthur.testez/http/host/path&quot;</span><span class="s1">)
+        )</span><span class="s0">;</span><span class="s1"> 
+        AppIndex.AppIndexApi.end(client</span><span class="s0">, </span><span class="s1">viewAction)</span><span class="s0">;</span><span class="s1"> 
+        client.disconnect()</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">private class </span><span class="s1">AutenticaAsynk </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">public </span><span class="s1">AutenticaAsynk(){ 
+            Log.e(</span><span class="s2">&quot;Eee&quot;</span><span class="s0">, </span><span class="s2">&quot;aaa&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            Log.e(</span><span class="s2">&quot;doIN&quot;</span><span class="s0">, </span><span class="s2">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s5">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s2">&quot;ERRO&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;kk eae men&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;a&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            matriculaTxt = (EditText) findViewById(R.id.matriculaEdt)</span><span class="s0">;</span><span class="s1"> 
+            senhaTxt= (EditText) findViewById(R.id.senhaEdt)</span><span class="s0">;</span><span class="s1"> 
+            Gson gson = </span><span class="s0">new </span><span class="s1">Gson()</span><span class="s0">;</span><span class="s1"> 
+            JSONObject json</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;OAPSDFOPAS&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;A&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(s.contains(</span><span class="s2">&quot;toke&quot;</span><span class="s1">)){ 
+                AlertDialog.Builder alert = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(context)</span><span class="s0">;</span><span class="s1"> 
+                alert.setMessage(</span><span class="s2">&quot;CONSEGUIMOS&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                alert.setTitle(</span><span class="s2">&quot;LOGOU&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                AlertDialog.Builder alert = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(context)</span><span class="s0">;</span><span class="s1"> 
+                alert.setMessage(</span><span class="s2">&quot;n logou&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                alert.setTitle(</span><span class="s2">&quot;LOGOU&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+</span><span class="s4">/* 
+            try { 
+                json = new JSONObject(s); 
+                usuarioGlobal = gson.fromJson(json.toString(), Usuario.class); 
+ 
+                Log.e(&quot;USUA TURMA: &quot;,usuarioGlobal.getTurma()[0]+ &quot;sdf&quot;); 
+                usuarioGlobal.setPermissoes(json.getString(&quot;permissoes&quot;)); 
+ 
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE); 
+                SharedPreferences.Editor editor = sharedPref.edit(); 
+                if (data !=null) { 
+                    RepositorioUsuario repo = new RepositorioUsuario(); 
+                    repo.setMatricula(usuarioGlobal.getMatricula()); 
+                    editor.putString(&quot;matricula&quot;, usuarioGlobal.getMatricula()); 
+                    repo.setSenha(usuarioGlobal.getSenha()); 
+                    editor.putString(&quot;senha&quot;, usuarioGlobal.getSenha()); 
+                    repo.setId(usuarioGlobal.getId()); 
+                    editor.putInt(&quot;id&quot;, usuarioGlobal.getId()); 
+                    editor.putString(&quot;tipo&quot;, usuarioGlobal.getTipo()); 
+ 
+                    editor.putBoolean(&quot;logado&quot;, true); 
+                    repo.setTipo(usuarioGlobal.getTipo()); 
+                    Log.e(&quot;TIPO&quot;, repo.getTipo()); 
+                    editor.putString(&quot;tipo&quot;, usuarioGlobal.getTipo()); 
+                    repo.setPermissoes(usuarioGlobal.getPermissoes()); 
+                    Log.e(&quot;PERMISSOES&quot;, usuarioGlobal.getPermissoes() + &quot;&quot;); 
+                    repo.setTurma(usuarioGlobal.getTurma()); 
+                    if (repo.getTipo().equals(&quot;ALUNO&quot;)) { 
+                        String[] turma = usuarioGlobal.getTurma(); 
+                        editor.putString(&quot;turma&quot;, turma[0]); 
+                    }repo.setHorario(usuarioGlobal.getHorario()); 
+ 
+ 
+                    editor.putString(&quot;permissoes&quot;, usuarioGlobal.getPermissoes()); 
+ 
+                }else{ 
+                    editor.putBoolean(&quot;logado&quot;, false); 
+                } 
+                editor.apply(); 
+                sharedPref = getPreferences(Context.MODE_PRIVATE); 
+                Log.e(&quot;PREFERENCES&quot;, sharedPref.getString(&quot;matricula&quot;, &quot;&quot;)); 
+            }catch(Exception e){ 
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE); 
+                SharedPreferences.Editor editor = sharedPref.edit(); 
+                editor.putBoolean(&quot;logado&quot;, false); 
+                editor.commit(); 
+                Log.e(&quot;JSONPOST&quot;, e.getMessage()); 
+            } 
+ 
+            SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE); 
+            boolean logado = sharedPreferences.getBoolean(&quot;logado&quot;, false); 
+            Log.e(&quot;LOGADO&quot;, logado+&quot;&quot;); 
+ 
+            if (logado){ 
+ 
+                Log.e(&quot;IF&quot;, logado+&quot;&quot;); 
+ 
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class); 
+ 
+                startActivity(intent); 
+                matriculaTxt.setText(&quot;&quot;); 
+                senhaTxt.setText(&quot;&quot;); 
+                aviso.setVisibility(View.INVISIBLE); 
+            }else{ 
+                aviso.setVisibility(View.VISIBLE); 
+            } 
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE); 
+ 
+            Log.e(&quot;LOGADO&quot;,sharedPref.getBoolean(&quot;logado&quot;, false)+&quot;&quot;); 
+ 
+            Log.e(&quot;DATA&quot;, s+&quot;&quot;);*/</span><span class="s1"> 
+        } 
+    }</span><span class="s4">/* 
+    private class GetTurmas extends AsyncTask&lt;String, Void, String&gt;{ 
+        private String[] turmas; 
+        private void setTurmas(String[] turmas){ 
+            this.turmas = turmas; 
+        } 
+        public String[] getTurmas(){ 
+            return turmas; 
+        } 
+        private StringBuffer data = new StringBuffer(); 
+        private BufferedReader br = null; 
+        BufferedWriter bw = null; 
+        @Override 
+        protected String doInBackground(String... strings) { 
+            try { 
+                HttpURLConnection connection = (HttpURLConnection) new URL(strings[0]).openConnection(); 
+                connection.setRequestMethod(&quot;POST&quot;); 
+                connection.setDoOutput(true); 
+                connection.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json&quot;); 
+                connection.setRequestProperty(&quot;Accept&quot;, &quot;application/json&quot;); 
+                connection.connect(); 
+                bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream())); 
+                JSONObject json = new JSONObject(strings[1]); 
+                bw.write(String.valueOf(json)); 
+                Log.e(&quot;JSON&quot;, String.valueOf(json)); 
+                bw.flush(); 
+ 
+                br = new BufferedReader(new InputStreamReader(connection.getInputStream())); 
+                data.append(br.readLine()); 
+                Log.e(&quot;DATA2&quot;, data.toString()); 
+                connection.disconnect(); 
+            }catch (Exception e){ 
+                e.printStackTrace(); 
+                return null; 
+            } 
+            return data.toString(); 
+        } 
+ 
+        @Override 
+        protected void onPostExecute(String s) { 
+            try{ 
+                String d2 =s ; 
+                JSONObject jsonObject = new JSONObject(d2); 
+                Gson gson = new Gson(); 
+                Usuario usuario = gson.fromJson(jsonObject.toString(), Usuario.class); 
+                RepositorioUsuario repo = new RepositorioUsuario(); 
+                repo.setTurma(usuario.getTurma()); 
+                Log.e(&quot;TURMAS NO JSON&quot;, usuario.getTurma()[0]); 
+                this.setTurmas(usuario.getTurma()); 
+            }catch (Exception e){ 
+                e.printStackTrace(); 
+            } 
+        } 
+    }*/</span><span class="s1"> 
+ 
+    </span><span class="s0">private class </span><span class="s1">Autentica2 </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String matricula = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        String senha = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        JSONObject json</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s5">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                matricula = json.getString(</span><span class="s2">&quot;username&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                senha =  json.getString(</span><span class="s2">&quot;password&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+ 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                token = </span><span class="s0">new </span><span class="s1">JSONObject(data.toString()).getString(</span><span class="s2">&quot;token&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setToken(token)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA2&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">return </span><span class="s2">&quot;OK&quot;</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s2">&quot;FAIL&quot;</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;POST&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(s.equals(</span><span class="s2">&quot;OK&quot;</span><span class="s1">)){ 
+                Usuario usuario = </span><span class="s0">new </span><span class="s1">Usuario()</span><span class="s0">;</span><span class="s1"> 
+                usuario.setMatricula(matricula)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//usuario.setSenha(senha);</span><span class="s1"> 
+                Toast.makeText(context</span><span class="s0">, </span><span class="s2">&quot;Autenticação pelo SUAP feita com sucesso&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//try{</span><span class="s1"> 
+                </span><span class="s4">//new GetInformacoes().execute(new JSONObject(data.toString()).getString(&quot;token&quot;), json.toString());}catch(Exception e){e.printStackTrace();}</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">IsCadastrado().execute(url1+</span><span class="s2">&quot;usuario&quot;</span><span class="s0">, new </span><span class="s1">Gson().toJson(usuario))</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">else </span><span class="s1">{ 
+                progressBar.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+                aviso.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">AutenticaP </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String matricula = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        String senha = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        JSONObject json</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s5">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                matricula = json.getString(</span><span class="s2">&quot;username&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                senha =  json.getString(</span><span class="s2">&quot;password&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.d(</span><span class="s2">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+ 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                token = </span><span class="s0">new </span><span class="s1">JSONObject(data.toString()).getString(</span><span class="s2">&quot;token&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setToken(token)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA2&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">return </span><span class="s2">&quot;OK&quot;</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s2">&quot;FAIL&quot;</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;POST&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(s.equals(</span><span class="s2">&quot;OK&quot;</span><span class="s1">)) { 
+                </span><span class="s0">new </span><span class="s1">GetPeriodos().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-periodos-letivos/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Intent intent = </span><span class="s0">new </span><span class="s1">Intent(context</span><span class="s0">, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                progressBar.setVisibility(View.GONE)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">IsCadastrado </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String json</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            url = strings[</span><span class="s5">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;CADASTRO&quot;</span><span class="s0">, </span><span class="s2">&quot;ENTROU&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]+</span><span class="s2">&quot;/isCadastrado&quot;</span><span class="s1">).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+                json = strings[</span><span class="s5">1</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s5">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;JSON&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+                Log.e(</span><span class="s2">&quot;DATA2&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            </span><span class="s0">if</span><span class="s1">(s.equals(</span><span class="s2">&quot;false&quot;</span><span class="s1">)){ 
+                </span><span class="s0">new </span><span class="s1">GetInformacoes().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-dados/&quot;</span><span class="s0">, </span><span class="s1">url)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                </span><span class="s0">new </span><span class="s1">GetUsuario().execute(url+</span><span class="s2">&quot;/GetUsuario&quot;</span><span class="s0">, </span><span class="s1">json)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">GetInformacoes </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String urlSuap</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+ 
+            </span><span class="s0">try</span><span class="s1">{ 
+                url = strings[</span><span class="s5">1</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                urlSuap = strings[</span><span class="s5">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;basicAuth: &quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s5">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(urlSuap).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setToken(token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Authorization&quot;</span><span class="s0">, </span><span class="s2">&quot;JWT &quot;</span><span class="s1">+token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setUseCaches(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;CODE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;DATA POST&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            Usuario usuario = </span><span class="s0">new </span><span class="s1">Usuario()</span><span class="s0">;</span><span class="s1"> 
+            JSONObject json</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(s)</span><span class="s0">;</span><span class="s1"> 
+                usuario.setMatricula(json.getString(</span><span class="s2">&quot;matricula&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                usuario.setNome(json.getString(</span><span class="s2">&quot;nome_usual&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                usuario.setTipo(json.getString(</span><span class="s2">&quot;tipo_vinculo&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                usuario.setCurso(json.getJSONObject(</span><span class="s2">&quot;vinculo&quot;</span><span class="s1">).getString(</span><span class="s2">&quot;curso&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                usuario.setUrl(json.getString(</span><span class="s2">&quot;url_foto_75x100&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                repo.setNome(usuario.getNome())</span><span class="s0">;</span><span class="s1"> 
+                repo.setMatricula(matri)</span><span class="s0">;</span><span class="s1"> 
+                repo.setSenha(sen)</span><span class="s0">;</span><span class="s1"> 
+                repo.setTipo(usuario.getTipo())</span><span class="s0">;</span><span class="s1"> 
+                repo.setCurso(usuario.getCurso())</span><span class="s0">;</span><span class="s1"> 
+                repo.setFoto(json.getString(</span><span class="s2">&quot;url_foto_75x100&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;FOTOOOO&quot; </span><span class="s0">, </span><span class="s2">&quot;a &quot; </span><span class="s1">+repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+            } 
+            </span><span class="s0">if </span><span class="s1">(!usuario.getTipo().equals(</span><span class="s2">&quot;Aluno&quot;</span><span class="s1">)) 
+                </span><span class="s0">new </span><span class="s1">GetServidor().execute(</span><span class="s2">&quot;&quot;</span><span class="s0">, new </span><span class="s1">Gson().toJson(usuario))</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">else</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">AddUsuario().execute(url+</span><span class="s2">&quot;/adicionar&quot;</span><span class="s0">, new </span><span class="s1">Gson().toJson(usuario))</span><span class="s0">;</span><span class="s1"> 
+ 
+        } 
+ 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetServidor </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        String jsonUsuario</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                </span><span class="s4">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+                jsonUsuario = strings[</span><span class="s5">1</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setToken(token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Authorization&quot;</span><span class="s0">, </span><span class="s2">&quot;JWT &quot;</span><span class="s1">+token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setUseCaches(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;CODE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Usuario usuario = </span><span class="s0">new </span><span class="s1">Usuario()</span><span class="s0">;</span><span class="s1"> 
+            JSONObject json</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(s)</span><span class="s0">;</span><span class="s1"> 
+                usuario = </span><span class="s0">new </span><span class="s1">Gson().fromJson(jsonUsuario</span><span class="s0">, </span><span class="s1">Usuario.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                usuario.setTipo(json.getString(</span><span class="s2">&quot;setor&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">new </span><span class="s1">AddUsuario().execute(url+</span><span class="s2">&quot;adicionar&quot;</span><span class="s0">, new </span><span class="s1">Gson().toJson(usuario))</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">GetUsuario </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                url = strings[</span><span class="s5">1</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]+</span><span class="s2">&quot;/&quot;</span><span class="s1">+matri).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA2&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            Usuario usuario = </span><span class="s0">new </span><span class="s1">Gson().fromJson(s</span><span class="s0">, </span><span class="s1">Usuario.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            repo.setNome(usuario.getNome())</span><span class="s0">;</span><span class="s1"> 
+            repo.setMatricula(usuario.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+            repo.setSenha(senhaTxt.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            repo.setPermissoes(usuario.getPermissoes())</span><span class="s0">;</span><span class="s1"> 
+            repo.setHorario(usuario.getHorario())</span><span class="s0">;</span><span class="s1"> 
+            repo.setId(usuario.getId())</span><span class="s0">;</span><span class="s1"> 
+            repo.setTipo(usuario.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            repo.setCurso(usuario.getCurso())</span><span class="s0">;</span><span class="s1"> 
+            repo.setFoto(usuario.getUrl())</span><span class="s0">;</span><span class="s1"> 
+ 
+            sharedPreferences(repo)</span><span class="s0">;</span><span class="s1"> 
+ 
+            progressBar.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">DownloadImageTask().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/&quot;</span><span class="s1">+repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            Intent intent = </span><span class="s0">new </span><span class="s1">Intent(context</span><span class="s0">, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+            progressBar.setVisibility(View.GONE)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;POST&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">private void </span><span class="s1">sharedPreferences(RepositorioUsuario repo){ 
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE)</span><span class="s0">;</span><span class="s1"> 
+            SharedPreferences.Editor editor = sharedPref.edit()</span><span class="s0">;</span><span class="s1"> 
+ 
+            editor.putString(</span><span class="s2">&quot;matricula&quot;</span><span class="s0">, </span><span class="s1">repo.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;senha&quot;</span><span class="s0">, </span><span class="s1">repo.getSenha())</span><span class="s0">;</span><span class="s1"> 
+            editor.putInt(</span><span class="s2">&quot;id&quot;</span><span class="s0">, </span><span class="s1">repo.getId())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;nome&quot;</span><span class="s0">, </span><span class="s1">repo.getNome())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">repo.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            editor.putBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">repo.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;curso&quot;</span><span class="s0">, </span><span class="s1">repo.getCurso())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;url&quot;</span><span class="s0">, </span><span class="s1">repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;PERMISSOES&quot;</span><span class="s0">, </span><span class="s1">repo.getPermissoes() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s4">/*            if (repo.getTipo().equals(&quot;ALUNO&quot;)) { 
+                String[] turma = repo.getTurma(); 
+                editor.putString(&quot;turma&quot;, turma[0]); 
+            }ALTERAR*/</span><span class="s1"> 
+            editor.putBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;permissoes&quot;</span><span class="s0">, </span><span class="s1">repo.getPermissoes())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            editor.apply()</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">AddUsuario </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+ 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;POST&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-Type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Accept&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                bw = </span><span class="s0">new </span><span class="s1">BufferedWriter(</span><span class="s0">new </span><span class="s1">OutputStreamWriter(connection.getOutputStream()))</span><span class="s0">;</span><span class="s1"> 
+                JSONObject json = </span><span class="s0">new </span><span class="s1">JSONObject(strings[</span><span class="s5">1</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                bw.write(String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;JSON add&quot;</span><span class="s0">, </span><span class="s1">String.valueOf(json))</span><span class="s0">;</span><span class="s1"> 
+                bw.flush()</span><span class="s0">;</span><span class="s1"> 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA2&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;POST REPOAA&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;d&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            Usuario usuario = </span><span class="s0">new </span><span class="s1">Gson().fromJson(s</span><span class="s0">, </span><span class="s1">Usuario.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            repo.setNome(usuario.getNome())</span><span class="s0">;</span><span class="s1"> 
+            repo.setMatricula(usuario.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+            repo.setSenha(senhaTxt.getText()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            repo.setPermissoes(usuario.getPermissoes())</span><span class="s0">;</span><span class="s1"> 
+            repo.setHorario(usuario.getHorario( 
+ 
+            ))</span><span class="s0">;</span><span class="s1"> 
+            repo.setId(usuario.getId())</span><span class="s0">;</span><span class="s1"> 
+            repo.setTipo(usuario.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            repo.setCurso(usuario.getCurso())</span><span class="s0">;</span><span class="s1"> 
+            repo.setFoto(usuario.getUrl())</span><span class="s0">;</span><span class="s1"> 
+            sharedPreferences(repo)</span><span class="s0">;</span><span class="s1"> 
+ 
+            progressBar.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">new </span><span class="s1">DownloadImageTask().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/&quot;</span><span class="s1">+repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            Intent intent = </span><span class="s0">new </span><span class="s1">Intent(context</span><span class="s0">, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+            progressBar.setVisibility(View.GONE)</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;POST&quot;</span><span class="s0">, </span><span class="s1">s+</span><span class="s2">&quot;.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">private void </span><span class="s1">sharedPreferences(RepositorioUsuario repo){ 
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE)</span><span class="s0">;</span><span class="s1"> 
+            SharedPreferences.Editor editor = sharedPref.edit()</span><span class="s0">;</span><span class="s1"> 
+ 
+            editor.putString(</span><span class="s2">&quot;matricula&quot;</span><span class="s0">, </span><span class="s1">repo.getMatricula())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;senha&quot;</span><span class="s0">, </span><span class="s1">repo.getSenha())</span><span class="s0">;</span><span class="s1"> 
+            editor.putInt(</span><span class="s2">&quot;id&quot;</span><span class="s0">, </span><span class="s1">repo.getId())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;nome&quot;</span><span class="s0">, </span><span class="s1">repo.getNome())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">repo.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            editor.putBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, </span><span class="s1">repo.getTipo())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;curso&quot;</span><span class="s0">, </span><span class="s1">repo.getCurso())</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;url&quot;</span><span class="s0">, </span><span class="s1">repo.getFoto())</span><span class="s0">;</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;PERMISSOES&quot;</span><span class="s0">, </span><span class="s1">repo.getPermissoes() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(repo.getTipo().equals(</span><span class="s2">&quot;Al&quot;</span><span class="s1">)) { 
+                String[] turma = repo.getTurma()</span><span class="s0">;</span><span class="s1"> 
+                editor.putString(</span><span class="s2">&quot;turma&quot;</span><span class="s0">, </span><span class="s1">turma[</span><span class="s5">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+            } 
+            editor.putBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            editor.putString(</span><span class="s2">&quot;permissoes&quot;</span><span class="s0">, </span><span class="s1">repo.getPermissoes())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            editor.apply()</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">DownloadImageTask </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">Bitmap&gt;{ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">Bitmap doInBackground(String... url) { 
+            Log.e(</span><span class="s2">&quot;BACKGROUND&quot;</span><span class="s0">, </span><span class="s2">&quot;entrei&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s4">// decoding stream data back into image Bitmap that android understands</span><span class="s1"> 
+                </span><span class="s0">final </span><span class="s1">Bitmap bitmap = BitmapFactory.decodeStream(get.getInputStream())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">return </span><span class="s1">bitmap</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s4">//               Toast.makeText(mContext, &quot;Erro de imagem&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;BITMAP&quot;</span><span class="s0">,</span><span class="s2">&quot;Erro de imagem&quot;</span><span class="s0">,</span><span class="s1">e)</span><span class="s0">;</span><span class="s1"> 
+            } 
+            Log.e(</span><span class="s2">&quot;BACKGROUND&quot;</span><span class="s0">, </span><span class="s2">&quot;Retornei null&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">return null;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(Bitmap bitmap) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setBitmap(bitmap)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">GetPeriodos().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/api/v2/minhas-informacoes/meus-periodos-letivos/&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//List&lt;IProfile&gt; list = new ArrayList&lt;IProfile&gt;();</span><span class="s1"> 
+                </span><span class="s4">//list.add(new ProfileDrawerItem().withName(&quot;&quot;).withEmail(matricula).withIcon(image));</span><span class="s1"> 
+                </span><span class="s4">//mHeaderNavigation.setProfiles(list);</span><span class="s1"> 
+ 
+ 
+ 
+                </span><span class="s4">//notifyDataSetChanged();</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;ONPOSTEXECUTE&quot;</span><span class="s0">, </span><span class="s2">&quot;alterei no bitmap&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//image.setImageBitmap(bitmap);</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s2">&quot;ERRO&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+            } 
+ 
+        } 
+ 
+ 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetPeriodos </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String urlSuap</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+ 
+            </span><span class="s0">try</span><span class="s1">{ 
+ 
+             urlSuap = strings[</span><span class="s5">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;basicAuth: &quot;</span><span class="s0">, </span><span class="s1">strings[</span><span class="s5">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+                HttpURLConnection connection = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(urlSuap).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setToken(token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Authorization&quot;</span><span class="s0">, </span><span class="s2">&quot;JWT &quot;</span><span class="s1">+token)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setRequestProperty(</span><span class="s2">&quot;Content-type&quot;</span><span class="s0">, </span><span class="s2">&quot;application/json&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setUseCaches(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoOutput(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.setDoInput(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(connection.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;DATA&quot;</span><span class="s0">, </span><span class="s1">data.toString()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;CODE&quot;</span><span class="s0">, </span><span class="s1">connection.getResponseCode()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                connection.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;DATA POST&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+            String caminhoPeriodo=</span><span class="s2">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+            JSONArray json</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                json = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+                caminhoPeriodo += json.getJSONObject(json.length()-</span><span class="s5">1</span><span class="s1">).getString(</span><span class="s2">&quot;ano_letivo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                caminhoPeriodo += json.getJSONObject(json.length()-</span><span class="s5">1</span><span class="s1">).getString(</span><span class="s2">&quot;periodo_letivo&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+            } 
+ 
+            repo.setCaminhoPeriodo(caminhoPeriodo)</span><span class="s0">;</span><span class="s1"> 
+ 
+        } 
+ 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetPermissoes </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String</span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt;{ 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedWriter bw = </span><span class="s0">null;</span><span class="s1"> 
+        String urlSuap</span><span class="s0">;</span><span class="s1"> 
+        String url</span><span class="s0">;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+ 
+            </span><span class="s0">try</span><span class="s1">{ 
+                Log.e(</span><span class="s2">&quot;DOINB&quot;</span><span class="s0">, </span><span class="s2">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                urlSuap = strings[</span><span class="s5">0</span><span class="s1">]</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//String basicAuth = new String(Base64.encode(strings[0].getBytes(), Base64.DEFAULT));//encoding token do usuário</span><span class="s1"> 
+ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(strings[</span><span class="s5">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(get.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;2&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;LogData&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            Log.e(</span><span class="s2">&quot;DATA POST us&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+            RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+ 
+            JSONObject json</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                json = </span><span class="s0">new </span><span class="s1">JSONObject(s)</span><span class="s0">;</span><span class="s1"> 
+                repo.setPermissoes(json.getString(</span><span class="s2">&quot;permissoes&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e){ 
+ 
+            } 
+ 
+ 
+ 
+        } 
+ 
+    } 
+ 
+ 
+} 
+ 
+</span></pre>
+</body>
+</html>

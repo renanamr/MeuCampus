@@ -1,0 +1,382 @@
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+
+        tools:context="com.meucampus.arthur.testez.ActivityHorarioVisualizar">
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Horários"
+                    android:id="@+id/textView4" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="|  Segunda"
+                    android:id="@+id/textView5" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="|  Terça   |"
+                    android:id="@+id/textView6"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="   Quarta | "
+                    android:id="@+id/textView7" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="   Quinta  | "
+                    android:id="@+id/textView8" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="  Sexta  |   "
+                    android:id="@+id/textView9" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      1°     "
+                    android:id="@+id/textView10" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/button"
+                    android:text="Port"
+                    android:onClick="Mudar"
+                    android:backgroundTint="@android:color/white"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button2"
+                    android:text="PEOO"
+                    android:onClick="Mudar1"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button3"
+                    android:text="Mat"
+                    android:onClick="Mudar2"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button4"
+                    android:text="ing"
+                    android:onClick="Mudar3"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button5"
+                    android:text="Esp"
+                    android:onClick="Mudar4"
+                    android:backgroundTint="@android:color/white"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      2°"
+                    android:id="@+id/textView11" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button6"
+                    android:text="Port"
+                    android:onClick="Mudar5"
+                    android:backgroundTint="@android:color/white" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button11"
+                    android:onClick="Mudar10"
+                    android:text="Port"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button12"
+                    android:text="Port"
+                    android:onClick="Mudar11"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button13"
+                    android:text="Port"
+                    android:onClick="Mudar12"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button14"
+                    android:text="Port"
+                    android:onClick="Mudar13"
+                    android:backgroundTint="@android:color/white"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      3°"
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button7"
+                    android:text="Port"
+                    android:onClick="Mudar6"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button15"
+                    android:text="Port"
+                    android:onClick="Mudar14"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button16"
+                    android:text="Port"
+                    android:onClick="Mudar15"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button17"
+                    android:text="Port"
+                    android:onClick="Mudar16"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button18"
+                    android:text="Port"
+                    android:onClick="Mudar17"
+                    android:backgroundTint="@android:color/white"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      4°"
+                    android:id="@+id/textView13" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button8"
+                    android:text="Port"
+                    android:onClick="Mudar7"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button19"
+                    android:onClick="Mudar18"
+                    android:text="Art"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button20"
+                    android:text="Port"
+                    android:onClick="Mudar19"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button21"
+                    android:text="Port"
+                    android:onClick="Mudar20"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button22"
+                    android:text="Port"
+                    android:onClick="Mudar21"
+                    android:backgroundTint="@android:color/white"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      5°"
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button9"
+                    android:text="Port"
+                    android:onClick="Mudar8"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button23"
+                    android:text="Port"
+                    android:onClick="Mudar22"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button24"
+                    android:text="Port"
+                    android:onClick="Mudar23"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button25"
+                    android:text="Port"
+                    android:onClick="Mudar24"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button26"
+                    android:text="Port"
+                    android:onClick="Mudar25"
+                    android:backgroundTint="@android:color/white"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="      6°"
+                    android:id="@+id/textView15" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button10"
+                    android:onClick="Mudar9"
+                    android:text="Port"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button27"
+                    android:onClick="Mudar26"
+                    android:text="Port"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button28"
+                    android:onClick="Mudar27"
+                    android:text="Port"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button29"
+                    android:onClick="Mudar28"
+                    android:text="Port"
+                    android:backgroundTint="@android:color/white"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button30"
+                    android:onClick="Mudar29"
+                    android:text="Port" android:backgroundTint="@android:color/white"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Trocar"
+                    android:id="@+id/buttonTrocar"
+                    android:onClick="TrocarDeHorario"
+                    android:layout_column="3" android:backgroundTint="@android:color/white"/>
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</ScrollView>

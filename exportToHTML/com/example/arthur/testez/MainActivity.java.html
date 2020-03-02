@@ -1,0 +1,719 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.meucampus.arthur.testez</span><span class="s0">;</span><span class="s1">
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Notification</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.Bitmap</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.Ringtone</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.media.RingtoneManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.ConnectivityManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.NetworkInfo</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AlertDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.NotificationCompat</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.Gravity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.CompoundButton</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ProgressBar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">com.meucampus.arthur.testez.Services.ServicoNotificacao</span><span class="s0">;</span><span class="s1">
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.AccountHeader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.AccountHeaderBuilder</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.Drawer</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.DrawerBuilder</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.DividerDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.PrimaryDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.ProfileDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.SectionDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.SwitchDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.interfaces.IDrawerItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">com.mikepenz.materialdrawer.model.interfaces.IProfile</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">org.json.JSONArray</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">org.json.JSONObject</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.HttpURLConnection</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+    </span><span class="s0">private </span><span class="s1">Toolbar mToolbar</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Toolbar mToolbarBottom</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Drawer mLeftDrawer</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">AccountHeader mHeaderNavigation</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">private  </span><span class="s1">FloatingActionButton fab</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">List&lt;Noticia&gt; mList</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">List&lt;Evento&gt; mListEvento</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">NoticiaAdapter mAdapter</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">EventoAdapter mAdapterEvento</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">ListView mListView</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">ListView mListViewEventos</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String matricula</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String url1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static </span><span class="s1">ProgressBar progress</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">static </span><span class="s1">Bitmap image = </span><span class="s0">new </span><span class="s1">RepositorioUsuario().getBitmap()</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onStart() { 
+        </span><span class="s0">new </span><span class="s1">ServicoNotificacao(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">OnCheckedChangeListener mOnCheckedChangeListener = </span><span class="s0">new </span><span class="s1">OnCheckedChangeListener(){ 
+ 
+        @Override 
+        </span><span class="s0">public void </span><span class="s1">onCheckedChanged(IDrawerItem drawerItem</span><span class="s0">, </span><span class="s1">CompoundButton buttonView</span><span class="s0">, boolean </span><span class="s1">isChecked) { 
+            </span><span class="s0">if </span><span class="s1">(isChecked){ 
+                Toast.makeText(MainActivity.</span><span class="s0">this, </span><span class="s2">&quot;tá como true (ativado) &quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                Toast.makeText(MainActivity.</span><span class="s0">this, </span><span class="s2">&quot;tá como false (desativado) &quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    }</span><span class="s0">;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onResume() { 
+        </span><span class="s0">new </span><span class="s1">GetNoticias().execute(url1+ </span><span class="s2">&quot;noticia/lista&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">new </span><span class="s1">GetEventos().execute(url1+</span><span class="s2">&quot;evento/lista&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">.onResume()</span><span class="s0">;</span><span class="s1"> 
+    } 
+    </span><span class="s0">public void </span><span class="s1">abc(String titulo</span><span class="s0">, </span><span class="s1">String tipo){ 
+        NotificationManager nM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE)</span><span class="s0">;</span><span class="s1"> 
+        PendingIntent p = PendingIntent.getActivity(getApplicationContext()</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ServicoNotificacao.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">, </span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        NotificationCompat.Builder builder1 = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        builder1.setTicker(</span><span class="s2">&quot;Meu campus&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        builder1.setContentTitle(tipo)</span><span class="s0">;</span><span class="s1"> 
+        builder1.setContentText(titulo)</span><span class="s0">;</span><span class="s1"> 
+        builder1.setSmallIcon(R.mipmap.ic_launcher)</span><span class="s0">;</span><span class="s1"> 
+        builder1.setContentIntent(p)</span><span class="s0">;</span><span class="s1"> 
+ 
+        Notification n = builder1.build()</span><span class="s0">;</span><span class="s1"> 
+        n.flags = Notification.FLAG_AUTO_CANCEL</span><span class="s0">;</span><span class="s1"> 
+        nM.notify(R.mipmap.ic_launcher</span><span class="s0">, </span><span class="s1">n)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)</span><span class="s0">;</span><span class="s1"> 
+            Ringtone toque = RingtoneManager.getRingtone(getApplicationContext()</span><span class="s0">, </span><span class="s1">som)</span><span class="s0">;</span><span class="s1"> 
+            toque.play()</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+ 
+        } 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">startService(Context context){ 
+        </span><span class="s0">new </span><span class="s1">RepositorioUsuario().setUrl(url1)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s2">&quot;URL1&quot;</span><span class="s0">, new </span><span class="s1">RepositorioUsuario().getUrl())</span><span class="s0">;</span><span class="s1"> 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(context</span><span class="s0">, </span><span class="s1">ServicoNotificacao.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        context.startService(intent)</span><span class="s0">;</span><span class="s1"> 
+    } 
+    Bundle bundle</span><span class="s0">;</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE)</span><span class="s0">;</span><span class="s1"> 
+        RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+        bundle = savedInstanceState</span><span class="s0">;</span><span class="s1"> 
+        String matricula = repo.getMatricula()</span><span class="s0">;</span><span class="s1"> 
+        String permissoes = repo.getPermissoes()</span><span class="s0">;</span><span class="s1"> 
+        url1 = getResources().getString(R.string.url)</span><span class="s0">;</span><span class="s1"> 
+        String url = repo.getFoto()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">new </span><span class="s1">DownloadImageTask().execute(</span><span class="s2">&quot;https://suap.ifrn.edu.br/&quot;</span><span class="s1">+repo.getUrl())</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">//boolean cadastraNoticia = repo.getPermissoes().contains(&quot;noticia&quot;);</span><span class="s1"> 
+ 
+ 
+        </span><span class="s4">//Log.e(&quot;MATRICULA&quot;, repo.getMatricula());</span><span class="s1"> 
+        setContentView(R.layout.activity_main)</span><span class="s0">;</span><span class="s1"> 
+        fab = (FloatingActionButton) findViewById(R.id.add)</span><span class="s0">;</span><span class="s1"> 
+        Toast.makeText(</span><span class="s0">this, </span><span class="s1">repo.getCurso()</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(!repo.getPermissoes().contains(</span><span class="s2">&quot;noticia&quot;</span><span class="s1">)){ 
+            fab.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s4">/*if (!cadastraNoticia) { 
+            fab.setVisibility(View.INVISIBLE); 
+        }*/</span><span class="s1"> 
+ 
+ 
+        progress = (ProgressBar) findViewById(R.id.progressMain)</span><span class="s0">;</span><span class="s1"> 
+        mListView = (ListView) findViewById(R.id.listViewNoticias)</span><span class="s0">;</span><span class="s1"> 
+        mListViewEventos = (ListView) findViewById(R.id.listViewEventos)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//txt.setText(&quot;Carregando...&quot;);</span><span class="s1"> 
+        </span><span class="s4">//ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);</span><span class="s1"> 
+        </span><span class="s4">//NetworkInfo netInfo = cm.getActiveNetworkInfo();</span><span class="s1"> 
+        </span><span class="s4">//if (netInfo.isConnectedOrConnecting() &amp;&amp; netInfo != null) {</span><span class="s1"> 
+            Log.e(</span><span class="s2">&quot;CONEXÃO&quot;</span><span class="s0">, </span><span class="s2">&quot;OK&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">new </span><span class="s1">GetNoticias().execute(url1+</span><span class="s2">&quot;noticia/lista&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s4">//new GetEventos().execute(&quot;http://192.168.43.127:8080/meucampus/service/evento/lista&quot;);</span><span class="s1"> 
+        </span><span class="s4">//}else{</span><span class="s1"> 
+ 
+          </span><span class="s4">//  txt.setText(&quot;Erro na conexão!&quot;);</span><span class="s1"> 
+        </span><span class="s4">//}</span><span class="s1"> 
+ 
+ 
+ 
+        mToolbar = (Toolbar) findViewById(R.id.tb_main)</span><span class="s0">;</span><span class="s1"> 
+        mToolbar.setTitle(</span><span class="s2">&quot;Meu Campus&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//mToolbar.setSubtitle(&quot;Subtitlle 123&quot;);</span><span class="s1"> 
+        setSupportActionBar(mToolbar)</span><span class="s0">;</span><span class="s1"> 
+        notticiaSelecionada()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+  </span><span class="s4">/*      mToolbarBottom = (Toolbar) findViewById(R.id.inc_tb_bottom); 
+        mToolbarBottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() { 
+            @Override 
+            public boolean onMenuItemClick(MenuItem item) { 
+                Intent it = null; 
+                switch (item.getItemId()){ 
+                    case R.id.action_settings: 
+                        it = new Intent(Intent.ACTION_VIEW); 
+                        it.setData(Uri.parse(&quot;http://www.google.com&quot;)); 
+                        Toast.makeText(getApplicationContext(), &quot;0&quot;, Toast.LENGTH_LONG).show(); 
+                        break; 
+                    case R.id.action_settings1: 
+                        Toast.makeText(getApplicationContext(), &quot;1&quot;, Toast.LENGTH_LONG).show(); 
+                        break; 
+                    case R.id.action_settings2: 
+                        Toast.makeText(getApplicationContext(), &quot;2&quot;, Toast.LENGTH_LONG).show(); 
+                        break; 
+                    case R.id.action_settings3: 
+                        Toast.makeText(getApplicationContext(), &quot;3&quot;, Toast.LENGTH_LONG).show(); 
+                        break; 
+                    case R.id.action_settings4: 
+                        Toast.makeText(getApplicationContext(), &quot;4&quot;, Toast.LENGTH_LONG).show(); 
+                        break; 
+                } 
+                startActivity(it); 
+                return true; 
+            } 
+        }); 
+        mToolbarBottom.inflateMenu(R.menu.menu_bottom); */</span><span class="s1"> 
+        </span><span class="s4">//mToolbarBottom = (Toolbar) findViewById(R.id.tb_bottom1);</span><span class="s1"> 
+        String nome = </span><span class="s0">new </span><span class="s1">RepositorioUsuario().getNome()</span><span class="s0">;</span><span class="s1"> 
+        mHeaderNavigation = </span><span class="s0">new </span><span class="s1">AccountHeaderBuilder() 
+                .withActivity(</span><span class="s0">this</span><span class="s1">) 
+                .withCompactStyle(</span><span class="s0">false</span><span class="s1">) 
+                .withSavedInstance(bundle) 
+                .withThreeSmallProfileImages(</span><span class="s0">false</span><span class="s1">) 
+ 
+                .addProfiles( 
+                        </span><span class="s0">new </span><span class="s1">ProfileDrawerItem().withName(nome).withEmail(matricula).withIcon(image)) 
+                .withTextColor(getResources().getColor(R.color.colorAccent)) 
+                .build()</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer = </span><span class="s0">new </span><span class="s1">DrawerBuilder() 
+                .withActivity(</span><span class="s0">this</span><span class="s1">) 
+                .withToolbar (mToolbar) 
+                .withDisplayBelowStatusBar(</span><span class="s0">true</span><span class="s1">) 
+                .withAccountHeader(mHeaderNavigation) 
+ 
+                .withSelectedItem(</span><span class="s3">0</span><span class="s1">) 
+                .withActionBarDrawerToggleAnimated(</span><span class="s0">true</span><span class="s1">) 
+                .withOnDrawerItemClickListener(</span><span class="s0">new </span><span class="s1">Drawer.OnDrawerItemClickListener() { 
+                    @Override 
+                    </span><span class="s0">public boolean </span><span class="s1">onItemClick(View view</span><span class="s0">, int </span><span class="s1">position</span><span class="s0">, </span><span class="s1">IDrawerItem drawerItem) { 
+                        </span><span class="s4">//Toast.makeText(getApplicationContext(), position + &quot;&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+                        </span><span class="s0">switch </span><span class="s1">(position){ 
+                            </span><span class="s0">case </span><span class="s3">2</span><span class="s1">: 
+ 
+                                notticiaSelecionada()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">3</span><span class="s1">: 
+                                eventoSelecionado()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">4</span><span class="s1">: 
+                                </span><span class="s4">//String tipo = sharedPreferences.getString(&quot;tipo&quot;);</span><span class="s1"> 
+                                </span><span class="s4">/*String tipo = new RepositorioUsuario().getTipo(); 
+                                Bundle tipob = new Bundle(); 
+                                tipob.putString(&quot;tipo&quot;, tipo); 
+                                if (!tipo.equals(&quot;Aluno&quot;)) { 
+                                    Intent intent = new Intent(getApplicationContext(), ActivityChatCoades.class); 
+                                    intent.putExtras(tipob); 
+                                    startActivity(intent); 
+                                }else{ 
+                                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class); 
+                                    intent.putExtras(tipob); 
+                                    startActivity(intent); 
+                                }*/</span><span class="s1"> 
+                                Bundle tipob2 = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s4">//tipob2.putString(&quot;tipo&quot;, &quot;COADES/NC&quot;);</span><span class="s1"> 
+                                RepositorioUsuario repo1 = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s4">//                                repo1.setMatricula(&quot;123&quot;);</span><span class="s1"> 
+                                </span><span class="s4">/*Intent intent4 = new Intent(getApplicationContext(), ActivityChatCoades.class); 
+                                intent4.putExtras(tipob2); 
+                                startActivity(intent4);*/</span><span class="s1"> 
+ 
+                                Log.e(</span><span class="s2">&quot;REPOOO&quot;</span><span class="s0">,</span><span class="s1">repo1.getTipo() )</span><span class="s0">;</span><span class="s1"> 
+                                String repo3 = repo1.getTipo()</span><span class="s0">;</span><span class="s1"> 
+                                String repo4 = repo1.getCurso()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">if </span><span class="s1">(</span><span class="s0">new </span><span class="s1">RepositorioUsuario().getCurso().contains(</span><span class="s2">&quot;Médio&quot;</span><span class="s1">)){ 
+                                    Log.e(</span><span class="s2">&quot;IF1&quot;</span><span class="s0">, </span><span class="s2">&quot;TESTE&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                    Intent intent3 = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityNovaConversaAluno.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                    intent3.putExtras(tipob2)</span><span class="s0">;</span><span class="s1"> 
+                                    startActivity(intent3)</span><span class="s0">;</span><span class="s1"> 
+                                }</span><span class="s0">else</span><span class="s1">{ 
+                                    Log.e(</span><span class="s2">&quot;OPAAA&quot;</span><span class="s0">, </span><span class="s2">&quot;ÉOQ&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                    Log.e(</span><span class="s2">&quot;IF2&quot;</span><span class="s0">, new </span><span class="s1">RepositorioUsuario().getTipo())</span><span class="s0">;</span><span class="s1"> 
+                                    Intent intent3 = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityChatCoades.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                    tipob2.putString(</span><span class="s2">&quot;tipo&quot;</span><span class="s0">, new </span><span class="s1">RepositorioUsuario().getTipo())</span><span class="s0">;</span><span class="s1"> 
+                                    intent3.putExtras(tipob2)</span><span class="s0">;</span><span class="s1"> 
+                                    startActivity(intent3)</span><span class="s0">;</span><span class="s1"> 
+                                } 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">5</span><span class="s1">: 
+                                Intent intent1 = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">CalculadoraIf.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                startActivity(intent1)</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">6</span><span class="s1">: 
+                                Intent intent2</span><span class="s0">;</span><span class="s1"> 
+                                RepositorioUsuario repo = </span><span class="s0">new </span><span class="s1">RepositorioUsuario()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">if </span><span class="s1">(repo.getTipo().equals(</span><span class="s2">&quot;PROFESSOR&quot;</span><span class="s1">)){ 
+                                    intent2 = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityHorario.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                }</span><span class="s0">else</span><span class="s1">{ 
+                                    Bundle b = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                                    b.putString(</span><span class="s2">&quot;turma&quot;</span><span class="s0">, </span><span class="s1">repo.getTurma()[</span><span class="s3">0</span><span class="s1">])</span><span class="s0">;</span><span class="s1"> 
+ 
+                                    intent2 = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityHorarioVisualizar.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                    intent2.putExtras(b)</span><span class="s0">;</span><span class="s1"> 
+                                } 
+ 
+                                Log.e(</span><span class="s2">&quot;case 6&quot;</span><span class="s0">, </span><span class="s2">&quot;e&quot; </span><span class="s1">+ 
+                                        </span><span class="s2">&quot;ntrei&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                startActivity(intent2)</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">7</span><span class="s1">: 
+                                Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">ActivityTurmas.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">8</span><span class="s1">: 
+                                </span><span class="s4">/*tring tipo2 = new RepositorioUsuario().getTipo(); 
+                                Bundle tipob2 = new Bundle(); 
+                                tipob2.putString(&quot;tipo&quot;, tipo2); 
+                                if(tipo2.equals(&quot;Aluno&quot;)) { 
+                                    Intent intent3 = new Intent(getApplicationContext(), ChatActivity.class); 
+                                    intent3.putExtras(tipob2); 
+                                    startActivity(intent3); 
+                                }else{ 
+                                    Intent intent3 = new Intent(getApplicationContext(), ActivityChatCoades.class); 
+                                    intent3.putExtras(tipob2); 
+                                    startActivity(intent3); 
+                                }*/</span><span class="s1"> 
+                                </span><span class="s4">/*Bundle tipob2 = new Bundle(); 
+                                tipob2.putString(&quot;tipo&quot;, &quot;COADES/NC&quot;); 
+                                Intent intent3 = new Intent(getApplicationContext(), ChatActivity.class); 
+                                intent3.putExtras(tipob2); 
+                                startActivity(intent3);*/</span><span class="s1"> 
+                                Log.e(</span><span class="s2">&quot;teste&quot;</span><span class="s0">, </span><span class="s2">&quot;Opa&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+                            </span><span class="s0">case </span><span class="s3">9</span><span class="s1">: 
+                                Log.e(</span><span class="s2">&quot;case 7&quot;</span><span class="s0">, </span><span class="s2">&quot;e&quot; </span><span class="s1">+ 
+                                        </span><span class="s2">&quot;ntrei&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                                sair()</span><span class="s0">;</span><span class="s1"> 
+                                </span><span class="s0">break;</span><span class="s1"> 
+ 
+ 
+                        } 
+                        </span><span class="s0">return false;</span><span class="s1"> 
+                    } 
+                }) 
+                .build()</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">SectionDrawerItem().withName(</span><span class="s2">&quot;Serviços&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Notícias&quot;</span><span class="s1">).withIcon(R.drawable.ic_noticias))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Eventos&quot;</span><span class="s1">).withIcon(R.drawable.ic_eventos))</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">//mLeftDrawer.addItem(new DividerDrawerItem());</span><span class="s1"> 
+        </span><span class="s4">//mLeftDrawer.addItem(new SectionDrawerItem().withName(&quot;Opções&quot;));</span><span class="s1"> 
+        </span><span class="s4">//mLeftDrawer.addItem(new PrimaryDrawerItem().withName(&quot;Persolalizar&quot;).withIcon(R.drawable.ic_config));</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Iniciar Chat&quot;</span><span class="s1">).withIcon(R.drawable.ic_chatcoades))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Calcular nota&quot;</span><span class="s1">).withIcon(R.drawable.ic_calc))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Horario&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Turmas virtuais&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">DividerDrawerItem())</span><span class="s0">;</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">PrimaryDrawerItem().withName(</span><span class="s2">&quot;Sair&quot;</span><span class="s1">).withIcon(R.drawable.sair))</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//mLeftDrawer.addItem(new PrimaryDrawerItem().withName(&quot;item4&quot;).withIcon(R.drawable.ic_config));</span><span class="s1"> 
+        mLeftDrawer.addItem(</span><span class="s0">new </span><span class="s1">SwitchDrawerItem().withName(</span><span class="s2">&quot;Notificações&quot;</span><span class="s1">).withOnCheckedChangeListener(mOnCheckedChangeListener))</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+        startService(getApplicationContext())</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+ 
+ 
+ 
+ 
+    </span><span class="s0">private void </span><span class="s1">sair() { 
+        AlertDialog.Builder builder = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        builder.setTitle(</span><span class="s2">&quot;Sair&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        builder.setMessage(</span><span class="s2">&quot;Deseja realmente sair?&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        builder.setPositiveButton(</span><span class="s2">&quot;Sim&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialogInterface</span><span class="s0">, int </span><span class="s1">i) { 
+                SharedPreferences pref = getPreferences(MODE_PRIVATE)</span><span class="s0">;</span><span class="s1"> 
+                SharedPreferences.Editor editor = pref.edit()</span><span class="s0">;</span><span class="s1"> 
+                editor.putBoolean(</span><span class="s2">&quot;logado&quot;</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                editor.clear()</span><span class="s0">;</span><span class="s1"> 
+ 
+                editor.apply()</span><span class="s0">;</span><span class="s1"> 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        builder.setNegativeButton(</span><span class="s2">&quot;Não&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialogInterface</span><span class="s0">, int </span><span class="s1">i) { 
+ 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+        builder.show()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    } 
+</span><span class="s4">/* 
+    public String readRawTextFile() { 
+        try { 
+            InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.entradas); 
+            InputStreamReader inputreader = new InputStreamReader(inputStream); 
+            BufferedReader buffreader = new BufferedReader(inputreader); 
+            return buffreader.readLine(); 
+        } catch (Exception e) { 
+            return null; 
+        } 
+    } 
+ 
+*/</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">notticiaSelecionada(){ 
+ 
+        </span><span class="s4">//mListViewEventos = (ListView) findViewById(R.id.listViewEventos);</span><span class="s1"> 
+        mListViewEventos.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        mListView.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        fab = (FloatingActionButton) findViewById(R.id.add)</span><span class="s0">;</span><span class="s1"> 
+        fab.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">NoticiaCadastro.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">//mList = new ArrayList&lt;&gt;();</span><span class="s1"> 
+        </span><span class="s4">//new GetNoticias().execute(&quot;http://192.168.43.127:8080/meucampus/service/noticia/lista&quot;);</span><span class="s1"> 
+ 
+ 
+ 
+ 
+        </span><span class="s4">/*try { 
+            JSONArray jsonArray = new JSONArray(readRawTextFile()); 
+            for (int i =0;jsonArray.getJSONObject(i)!=null;i++) { 
+                if(jsonArray.getJSONObject(i).getString(&quot;tipo&quot;).equals(&quot;noticia&quot;)) { 
+                    mList.add(new Noticia(jsonArray.getJSONObject(i).getString(&quot;titulo&quot; ),jsonArray.getJSONObject(i).getString(&quot;descricao&quot; ),jsonArray.getJSONObject(i).getString(&quot;data&quot;),jsonArray.getJSONObject(i).getString(&quot;imagem&quot;))); 
+                } 
+            } 
+        }catch(Exception e){ 
+        }*/</span><span class="s1"> 
+ 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onBackPressed() { 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">eventoSelecionado(){ 
+ 
+        </span><span class="s0">new </span><span class="s1">GetEventos().execute(url1+ </span><span class="s2">&quot;evento/lista&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        mListView.setVisibility(View.INVISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        mListViewEventos.setVisibility(View.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+        fab = (FloatingActionButton) findViewById(R.id.add)</span><span class="s0">;</span><span class="s1"> 
+        fab.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">EventoCadastro.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        mListEvento = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s4">//new GetEventos().execute(&quot;http://192.168.43.127:8080/meucampus/service/evento/lista&quot;);</span><span class="s1"> 
+        </span><span class="s4">/*try { 
+            JSONArray jsonArray = new JSONArray(readRawTextFile()); 
+            for (int i =0;jsonArray.getJSONObject(i)!=null;i++) { 
+                if(jsonArray.getJSONObject(i).getString(&quot;tipo&quot;).equals(&quot;evento&quot;)) { 
+                    mListEvento.add(new Evento(jsonArray.getJSONObject(i).getString(&quot;titulo&quot;),jsonArray.getJSONObject(i).getString(&quot;descricao&quot; ),jsonArray.getJSONObject(i).getString(&quot;data&quot;),jsonArray.getJSONObject(i).getString(&quot;dataInicio&quot;),jsonArray.getJSONObject(i).getString(&quot;dataFim&quot;),jsonArray.getJSONObject(i).getString(&quot;imagem&quot;))); 
+                } 
+            } 
+        }catch(Exception e){ 
+        } 
+ 
+        mListViewEventos = (ListView) findViewById(R.id.listViewPrincipal); 
+        mAdapterEvento = new EventoAdapter (getApplicationContext(), mListEvento); 
+        mListViewEventos.setAdapter(mAdapterEvento); 
+        mListViewEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() { 
+            @Override 
+            public void onItemClick(AdapterView&lt;?&gt; adapterView, View view, int i, long l) { 
+                Bundle a = new Bundle(); 
+                a.putString(&quot;titulo&quot;, mListEvento.get(i).getTitulo() + &quot;&quot;); 
+                a.putString(&quot;descricao&quot;, mListEvento.get(i).getDescricao() + &quot;&quot;); 
+                a.putString(&quot;data&quot;, mListEvento.get(i).getData()+&quot;&quot;); 
+                a.putString(&quot;dataInicio&quot;, mListEvento.get(i).getDataInicio() + &quot;&quot;); 
+                a.putString(&quot;dataFim&quot;, mListEvento.get(i).getDataFim() + &quot;&quot;); 
+                a.putString(&quot;link&quot;, mListEvento.get(i).getLink() + &quot;&quot; ); 
+                Intent intent = new Intent(getApplicationContext(), EventExpand.class); 
+                intent.putExtras(a); 
+                startActivity(intent); 
+            } 
+        }); 
+*/</span><span class="s1"> 
+ 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">GetNoticias </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt; { 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... url) { 
+            Log.e(</span><span class="s2">&quot;BACK&quot;</span><span class="s0">, </span><span class="s2">&quot;ASPDF&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s3">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(get.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;2&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;LogData&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e) { 
+                Log.e(</span><span class="s2">&quot;Erro&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            mList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                Log.e(</span><span class="s2">&quot;dentro&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+                JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">int </span><span class="s1">jsonLength = jsonArray.length()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s0">;</span><span class="s1">i &lt; jsonLength</span><span class="s0">; </span><span class="s1">i++){ 
+ 
+                    Noticia a = </span><span class="s0">new </span><span class="s1">Noticia(jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;titulo&quot; </span><span class="s1">)</span><span class="s0">,</span><span class="s1">jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;descricao&quot; </span><span class="s1">)</span><span class="s0">,</span><span class="s1">jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;data&quot;</span><span class="s1">)</span><span class="s0">,</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    a.setImagemLink(jsonArray.getJSONObject(i).getString(</span><span class="s2">&quot;imagemLink&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    mList.add(a)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                    Log.e(</span><span class="s2">&quot;NOTIDICA&quot;</span><span class="s0">, </span><span class="s2">&quot;ADD&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                } 
+                Log.e(</span><span class="s2">&quot;exeeee&quot;</span><span class="s0">,</span><span class="s1">mList.get(</span><span class="s3">0</span><span class="s1">).getTitulo()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                mAdapter = </span><span class="s0">new </span><span class="s1">NoticiaAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">mList)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//mListView = (ListView) findViewById(R.id.listViewNoticias);</span><span class="s1"> 
+ 
+                mListView.setAdapter(mAdapter)</span><span class="s0">;</span><span class="s1"> 
+                mListView.setOnItemClickListener(</span><span class="s0">new </span><span class="s1">AdapterView.OnItemClickListener() { 
+                    @Override 
+                    </span><span class="s0">public void </span><span class="s1">onItemClick(AdapterView&lt;?&gt; adapterView</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, long </span><span class="s1">l) { 
+                        Bundle a = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;titulo&quot;</span><span class="s0">, </span><span class="s1">mList.get(i).getTitulo() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;descricao&quot;</span><span class="s0">, </span><span class="s1">mList.get(i).getDescricao() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">NoticiaExpand.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        intent.putExtras(a)</span><span class="s0">;</span><span class="s1"> 
+                        startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s2">&quot;EXCPTION: &quot;</span><span class="s0">,</span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">GetEventos </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">String&gt; { 
+        StringBuffer data = </span><span class="s0">new </span><span class="s1">StringBuffer()</span><span class="s0">;</span><span class="s1"> 
+        BufferedReader br = </span><span class="s0">null;</span><span class="s1"> 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... url) { 
+            Log.e(</span><span class="s2">&quot;BACK&quot;</span><span class="s0">, </span><span class="s2">&quot;ASPDF&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s3">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;1&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                br = </span><span class="s0">new </span><span class="s1">BufferedReader(</span><span class="s0">new </span><span class="s1">InputStreamReader(get.getInputStream()))</span><span class="s0">;</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;Log&quot;</span><span class="s0">, </span><span class="s2">&quot;2&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                data.append(br.readLine())</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;LogData&quot;</span><span class="s0">, </span><span class="s1">data.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch</span><span class="s1">(Exception e) { 
+                Log.e(</span><span class="s2">&quot;Erro&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+ 
+            } 
+            </span><span class="s0">return </span><span class="s1">data.toString()</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            mListEvento = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try </span><span class="s1">{ 
+                Log.e(</span><span class="s2">&quot;dentro&quot;</span><span class="s0">, </span><span class="s1">s)</span><span class="s0">;</span><span class="s1"> 
+                JSONArray jsonArray = </span><span class="s0">new </span><span class="s1">JSONArray(s)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">int </span><span class="s1">jsonLength = jsonArray.length()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s0">;</span><span class="s1">i &lt; jsonLength</span><span class="s0">; </span><span class="s1">i++){ 
+ 
+                    JSONObject json = jsonArray.getJSONObject(i)</span><span class="s0">;</span><span class="s1"> 
+                    Evento e = </span><span class="s0">new </span><span class="s1">Evento()</span><span class="s0">;</span><span class="s1"> 
+                    e.setTitulo(json.getString(</span><span class="s2">&quot;titulo&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataFim(json.getString(</span><span class="s2">&quot;dataFim&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    e.setDescricao(json.getString(</span><span class="s2">&quot;descricao&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataInicio(json.getString(</span><span class="s2">&quot;dataInicio&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    e.setDataPublicacao(json.getString(</span><span class="s2">&quot;dataPublicacao&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    e.setLocal(json.getString(</span><span class="s2">&quot;local&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s4">//e.setTipo((Tipo) json.get(&quot;tipo&quot;));</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(!json.getString(</span><span class="s2">&quot;imageLink&quot;</span><span class="s1">).isEmpty()) 
+                    e.setImageLink(json.getString(</span><span class="s2">&quot;imageLink&quot;</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+                    mListEvento.add(e)</span><span class="s0">;</span><span class="s1"> 
+ 
+                } 
+ 
+ 
+                mAdapterEvento = </span><span class="s0">new </span><span class="s1">EventoAdapter(getApplicationContext()</span><span class="s0">, </span><span class="s1">mListEvento)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//mListViewEventos = (ListView) findViewById(R.id.listViewEventos);</span><span class="s1"> 
+ 
+ 
+                mListViewEventos.setAdapter(mAdapterEvento)</span><span class="s0">;</span><span class="s1"> 
+                mListViewEventos.setOnItemClickListener(</span><span class="s0">new </span><span class="s1">AdapterView.OnItemClickListener() { 
+                    @Override 
+                    </span><span class="s0">public void </span><span class="s1">onItemClick(AdapterView&lt;?&gt; adapterView</span><span class="s0">, </span><span class="s1">View view</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, long </span><span class="s1">l) { 
+                        Bundle a = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;titulo&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getTitulo() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;descricao&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getDescricao() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;data&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getDataPublicacao()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;dataInicio&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getDataInicio() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;dataFim&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getDataFim() + </span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        a.putString(</span><span class="s2">&quot;link&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(i).getImageLink() + </span><span class="s2">&quot;&quot; </span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">EventExpand.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        intent.putExtras(a)</span><span class="s0">;</span><span class="s1"> 
+                        startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;LIST&quot;</span><span class="s0">, </span><span class="s1">mListEvento.get(</span><span class="s3">0</span><span class="s1">).getTitulo()+</span><span class="s2">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s2">&quot;EXCPTION: &quot;</span><span class="s0">,</span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+            } 
+            progress.setVisibility(View.GONE)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+    </span><span class="s0">private class </span><span class="s1">DownloadImageTask </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String </span><span class="s0">, </span><span class="s1">Void</span><span class="s0">, </span><span class="s1">Bitmap&gt;{ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">Bitmap doInBackground(String... url) { 
+            Log.e(</span><span class="s2">&quot;BACKGROUND&quot;</span><span class="s0">, </span><span class="s2">&quot;entrei&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">try</span><span class="s1">{ 
+                HttpURLConnection get = (HttpURLConnection) </span><span class="s0">new </span><span class="s1">URL(url[</span><span class="s3">0</span><span class="s1">]).openConnection()</span><span class="s0">;</span><span class="s1"> 
+                get.setRequestMethod(</span><span class="s2">&quot;GET&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.connect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s4">// decoding stream data back into image Bitmap that android understands</span><span class="s1"> 
+                </span><span class="s0">final </span><span class="s1">Bitmap bitmap = BitmapFactory.decodeStream(get.getInputStream())</span><span class="s0">;</span><span class="s1"> 
+ 
+                get.disconnect()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">return </span><span class="s1">bitmap</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                e.printStackTrace()</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s4">//               Toast.makeText(mContext, &quot;Erro de imagem&quot;, Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+ 
+ 
+                Log.e(</span><span class="s2">&quot;BITMAP&quot;</span><span class="s0">,</span><span class="s2">&quot;Erro de imagem&quot;</span><span class="s0">,</span><span class="s1">e)</span><span class="s0">;</span><span class="s1"> 
+            } 
+            Log.e(</span><span class="s2">&quot;BACKGROUND&quot;</span><span class="s0">, </span><span class="s2">&quot;Retornei null&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">return null;</span><span class="s1"> 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(Bitmap bitmap) { 
+            </span><span class="s0">try</span><span class="s1">{ 
+                image = (bitmap)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//List&lt;IProfile&gt; list = new ArrayList&lt;IProfile&gt;();</span><span class="s1"> 
+                </span><span class="s4">//list.add(new ProfileDrawerItem().withName(&quot;&quot;).withEmail(matricula).withIcon(image));</span><span class="s1"> 
+                </span><span class="s4">//mHeaderNavigation.setProfiles(list);</span><span class="s1"> 
+ 
+ 
+ 
+                </span><span class="s4">//notifyDataSetChanged();</span><span class="s1"> 
+                Log.e(</span><span class="s2">&quot;ONPOSTEXECUTE&quot;</span><span class="s0">, </span><span class="s2">&quot;alterei no bitmap&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//image.setImageBitmap(bitmap);</span><span class="s1"> 
+            }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+                Log.e(</span><span class="s2">&quot;ERRO&quot;</span><span class="s0">, </span><span class="s1">e.getMessage())</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s4">//Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+            } 
+ 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>
